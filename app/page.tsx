@@ -1,5 +1,4 @@
-import { Container, Filters, Title, TopBar } from "@/components/shared"
-import { ProductCard } from "@/components/shared/ProductCard"
+import { Container, Filters, ProductsGroupList, Title, TopBar } from "@/components/shared"
 
 export default function Page() {
   return (
@@ -15,12 +14,92 @@ export default function Page() {
           </div>
           <div className="flex-1">
             <div className="flex flex-col gap-16">
-              <ProductCard
-                id={0}
-                name="Сырный цыпленок"
-                price={395}
-                imageUrl="https://media.dodostatic.net/image/r:584x584/0198bf3b88d5772695c7f9e557b5b196.webp"
-              />
+              <ProductsGroupList
+                title="Пиццы"
+                items={[
+                  {
+                    id: 1,
+                    name: "Мясная",
+                    price: 500,
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:584x584/0198bf3b88d5772695c7f9e557b5b196.webp",
+                    items: [{
+                       price: 500
+                    }]
+                  },
+                  {
+                    id: 1,
+                    name: "Мясная",
+                    price: 500,
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:584x584/0198bf3b88d5772695c7f9e557b5b196.webp",
+                    items: [{
+                       price: 500
+                    }]
+                  },
+                  {
+                    id: 1,
+                    name: "Мясная",
+                    price: 500,
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:584x584/0198bf3b88d5772695c7f9e557b5b196.webp",
+                    items: [{
+                       price: 500
+                    }]
+                  },
+                  {
+                    id: 1,
+                    name: "Мясная",
+                    price: 500,
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:584x584/0198bf3b88d5772695c7f9e557b5b196.webp",
+                    items: [{
+                       price: 500
+                    }]
+                  },
+                  {
+                    id: 1,
+                    name: "Мясная",
+                    price: 500,
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:584x584/0198bf3b88d5772695c7f9e557b5b196.webp",
+                    items: [{
+                       price: 500
+                    }]
+                  },
+                  {
+                    id: 1,
+                    name: "Мясная",
+                    price: 500,
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:584x584/0198bf3b88d5772695c7f9e557b5b196.webp",
+                    items: [{
+                       price: 500
+                    }]
+                  },
+                  {
+                    id: 1,
+                    name: "Мясная",
+                    price: 500,
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:584x584/0198bf3b88d5772695c7f9e557b5b196.webp",
+                    items: [{
+                       price: 500
+                    }]
+                  },
+                  {
+                    id: 1,
+                    name: "Мясная",
+                    price: 500,
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:584x584/0198bf3b88d5772695c7f9e557b5b196.webp",
+                    items: [{
+                       price: 500
+                    }]
+                  },
+                ]}
+                categoryId={1}
+              ></ProductsGroupList>
             </div>
           </div>
         </div>
