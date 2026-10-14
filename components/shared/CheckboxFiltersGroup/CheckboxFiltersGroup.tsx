@@ -4,7 +4,7 @@ import {
   FilterCheckbox,
   FilterCheckboxProps,
 } from "@/components/shared/FilterCheckbox"
-import { Input } from "@/components/ui"
+import { Input, Skeleton } from "@/components/ui"
 import { useState } from "react"
 import { cn } from "cn"
 
@@ -16,6 +16,7 @@ interface Props {
   items: Item[]
   defaultItems: Item[]
   limit?: number
+  loading?: boolean
   searchInputPlaceholder?: string
   onChange?: (values: string[]) => void
   defaultValue?: Item[]
@@ -27,6 +28,7 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
   items,
   defaultItems,
   limit = 6,
+  loading,
   searchInputPlaceholder = "Поиск...",
   onChange,
   defaultValue,
@@ -36,8 +38,25 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
   const onChangeSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value)
   }
+
+  if (loading) {
+    return (
+      <div className={className}>
+        <p className="mb-3 font-bold">{title}</p>
+        {...Array(limit)
+          .fill(0)
+          .map((_, index) => (
+            <Skeleton className="mb-5 h-3 bg-muted-foreground" key={index} />
+          ))}
+        <Skeleton className="w-28 h-3 bg-muted-foreground" />
+      </div>
+    )
+  }
+
   const list = showAll
-    ? items.filter((item) => item.text.toLowerCase().includes(searchValue.toLocaleLowerCase()))
+    ? items.filter((item) =>
+        item.text.toLowerCase().includes(searchValue.toLocaleLowerCase())
+      )
     : defaultItems.slice(0, limit)
 
   return (
@@ -53,7 +72,12 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
           />
         </div>
       )}
-      <div className={cn("scrollbar flex max-h-96 flex-col gap-3 pr-2 overscroll-contain", showAll && "overflow-y-auto")}>
+      <div
+        className={cn(
+          "scrollbar flex max-h-96 flex-col gap-3 overscroll-contain pr-2",
+          showAll && "overflow-y-auto"
+        )}
+      >
         {list.map(({ text, value, endAdornment }, index) => (
           <FilterCheckbox
             text={text}

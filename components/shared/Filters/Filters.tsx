@@ -10,7 +10,7 @@ import { Input } from "@/components/ui"
 import { useFilterIngredients } from "@/hooks/useFilterIngredients"
 
 export const Filters = () => {
-  const { ingredients } = useFilterIngredients()
+  const { ingredients, loading } = useFilterIngredients()
   const items = ingredients.map((ingredient) => ({
     text: ingredient.name,
     value: String(ingredient.id),
@@ -43,6 +43,7 @@ export const Filters = () => {
         limit={6}
         defaultItems={items.slice(0, 6)}
         items={items}
+        loading={loading}
       />
     </aside>
   )
