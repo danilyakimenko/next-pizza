@@ -1,3 +1,5 @@
+'use client'
+
 import {
   CheckboxFiltersGroup,
   FilterCheckbox,
@@ -5,8 +7,15 @@ import {
   Title,
 } from "@/components/shared"
 import { Input } from "@/components/ui"
+import { useFilterIngredients } from "@/hooks/useFilterIngredients"
 
 export const Filters = () => {
+  const { ingredients } = useFilterIngredients()
+  const items = ingredients.map((ingredient) => ({
+    text: ingredient.name,
+    value: String(ingredient.id),
+  }))
+
   return (
     <aside>
       <Title className="mb-5 font-bold" size="sm" text="Фильтрация" />
@@ -32,82 +41,8 @@ export const Filters = () => {
         className="mt-5"
         title="Ингредиенты"
         limit={6}
-        defaultItems={[
-          {
-            text: "Сырный соус",
-            value: "1",
-          },
-          {
-            text: "Моцаррела",
-            value: "2",
-          },
-          {
-            text: "Чеснок",
-            value: "3",
-          },
-          {
-            text: "Солённые огурчики",
-            value: "4",
-          },
-          {
-            text: "Красный лук",
-            value: "5",
-          },
-          {
-            text: "Томаты",
-            value: "6",
-          },
-        ]}
-        items={[
-          {
-            text: "Сырный соус",
-            value: "1",
-          },
-          {
-            text: "Моцаррела",
-            value: "2",
-          },
-          {
-            text: "Чеснок",
-            value: "3",
-          },
-          {
-            text: "Солённые огурчики",
-            value: "4",
-          },
-          {
-            text: "Красный лук",
-            value: "5",
-          },
-          {
-            text: "Томаты",
-            value: "6",
-          },
-          {
-            text: "Сырный соус",
-            value: "1",
-          },
-          {
-            text: "Моцаррела",
-            value: "2",
-          },
-          {
-            text: "Чеснок",
-            value: "3",
-          },
-          {
-            text: "Солённые огурчики",
-            value: "4",
-          },
-          {
-            text: "Красный лук",
-            value: "5",
-          },
-          {
-            text: "Томаты",
-            value: "6",
-          },
-        ]}
+        defaultItems={items.slice(0, 6)}
+        items={items}
       />
     </aside>
   )

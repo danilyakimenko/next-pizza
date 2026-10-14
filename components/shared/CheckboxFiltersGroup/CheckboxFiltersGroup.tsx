@@ -6,6 +6,7 @@ import {
 } from "@/components/shared/FilterCheckbox"
 import { Input } from "@/components/ui"
 import { useState } from "react"
+import { cn } from "cn"
 
 type Item = FilterCheckboxProps
 
@@ -52,7 +53,7 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
           />
         </div>
       )}
-      <div className="scrollbar flex max-h-96 flex-col gap-3 overflow-y-auto pr-2">
+      <div className={cn("scrollbar flex max-h-96 flex-col gap-3 pr-2 overscroll-contain", showAll && "overflow-y-auto")}>
         {list.map(({ text, value, endAdornment }, index) => (
           <FilterCheckbox
             text={text}
