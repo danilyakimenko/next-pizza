@@ -25,7 +25,7 @@ export default function RootLayout({
     <html
       lang="ru"
       suppressHydrationWarning
-      className={cn("antialiased scroll-smooth", nunito.className)}
+      className={cn("antialiased", nunito.className)}
     >
       <body>
         <Header />
