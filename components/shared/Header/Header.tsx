@@ -1,13 +1,14 @@
-import { Container } from "@/components/shared"
+import { Container, SearchInput } from "@/components/shared"
 import Image from "next/image"
 import { Button } from "@/components/ui"
 import { ArrowRight, ShoppingCart, User } from "lucide-react"
+import Link from "next/link"
 
 export const Header = () => {
   return (
     <header className="border border-b">
       <Container className="flex items-center justify-between py-8">
-        <div className="flex items-center gap-4">
+        <Link className="flex items-center gap-4" href="/">
           <Image src="/logo.png" alt="Logo" width={35} height={35} />
           <div>
             <h1 className="text-2xl font-black uppercase">Next Pizza</h1>
@@ -15,7 +16,12 @@ export const Header = () => {
               вкусней уже некуда
             </p>
           </div>
+        </Link>
+
+        <div className="mx-10 flex-1">
+          <SearchInput />
         </div>
+
         <div className="flex items-center gap-3">
           <Button className="flex items-center gap-1" variant="outline">
             <User size={16} />
