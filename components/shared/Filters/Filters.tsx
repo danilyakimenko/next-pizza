@@ -20,7 +20,7 @@ export const Filters = () => {
   }
 
   return (
-    <aside>
+    <aside className="sticky top-30">
       <Title className="mb-5 font-bold" size="sm" text="Фильтрация" />
       <CheckboxFiltersGroup
         className="mb-5"
