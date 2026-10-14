@@ -9,6 +9,7 @@ import {
 import { Input } from "@/components/ui"
 import { useFilterIngredients } from "@/hooks/useFilterIngredients"
 import { useState } from "react"
+import { useSet } from "react-use"
 
 interface PricesProps {
   priceFrom: number
@@ -16,7 +17,10 @@ interface PricesProps {
 }
 
 export const Filters = () => {
-  const { ingredients, loading, onAddId, selectedIds } = useFilterIngredients()
+  const { ingredients, loading, onAddId, selectedIngredients } =
+    useFilterIngredients()
+  const [sizes, { toggle: toggleSizes }] = useSet(new Set<string>([]))
+  const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(new Set<string>([]))
   const [prices, setPrices] = useState<PricesProps>({
     priceFrom: 0,
     priceTo: 1000,
@@ -36,10 +40,31 @@ export const Filters = () => {
   return (
     <aside>
       <Title className="mb-5 font-bold" size="sm" text="Фильтрация" />
-      <div className="flex flex-col gap-4">
-        <FilterCheckbox name="can_be_built" text="Можно собирать" value="1" />
-        <FilterCheckbox name="is_new" text="Новинки" value="2" />
-      </div>
+      <CheckboxFiltersGroup
+        className="mb-5"
+        title="Тип теста"
+        name="pizzaTypes"
+        limit={6}
+        onCheckboxClick={togglePizzaTypes}
+        selected={pizzaTypes}
+        items={[
+          { text: "Тонкое", value: "1" },
+          { text: "Традиционное", value: "2" },
+        ]}
+      />
+      <CheckboxFiltersGroup
+        className="mb-5"
+        title="Размеры"
+        name="sizes"
+        limit={6}
+        onCheckboxClick={toggleSizes}
+        selected={sizes}
+        items={[
+          { text: "20 см", value: "20" },
+          { text: "30 см", value: "30" },
+          { text: "40 см", value: "40" },
+        ]}
+      />
       <div className="mt-5 border-y border-y-neutral-100 py-6 pb-7">
         <p className="mb-3 font-bold">Цены от и до:</p>
         <div className="mb-5 flex gap-3">
@@ -83,7 +108,7 @@ export const Filters = () => {
         items={items}
         loading={loading}
         onCheckboxClick={onAddId}
-        selectedIds={selectedIds}
+        selected={selectedIngredients}
       />
     </aside>
   )
