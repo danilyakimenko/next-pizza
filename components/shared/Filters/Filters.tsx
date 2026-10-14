@@ -15,8 +15,8 @@ export const Filters = () => {
     value: String(ingredient.id),
   }))
   const updatePrices = (prices: number[]) => {
-    filters.setPrices('priceFrom', prices[0])
-    filters.setPrices('priceTo', prices[1])
+    filters.setPrices("priceFrom", prices[0])
+    filters.setPrices("priceTo", prices[1])
   }
 
   return (
@@ -75,7 +75,10 @@ export const Filters = () => {
           min={0}
           max={1000}
           step={10}
-          value={[filters.prices.priceFrom || 0, filters.prices.priceTo || 1000]}
+          value={[
+            filters.prices.priceFrom || 0,
+            filters.prices.priceTo || 1000,
+          ]}
           onValueChange={updatePrices}
         />
       </div>
