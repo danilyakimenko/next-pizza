@@ -13,7 +13,21 @@ interface QueryFilters extends PricesProps {
   ingredients: string
 }
 
-export const useFilters = () => {
+export interface Filters {
+  sizes: Set<string>
+  pizzaTypes: Set<string>
+  selectedIngredients: Set<string>
+  prices: PricesProps
+}
+
+interface ReturnProps extends Filters {
+  setPrices: (name: keyof PricesProps, value: number) => void
+  setPizzaTypes: (value: string) => void
+  setSizes: (value: string) => void
+  setSelectedIngredients: (value: string) => void
+}
+
+export const useFilters = (): ReturnProps  => {
   const searchParams = useSearchParams() as unknown as Map<
     keyof QueryFilters,
     string
@@ -45,18 +59,14 @@ export const useFilters = () => {
     })
   }
 
-  const filters = {
-    ...prices,
-    pizzaTypes: Array.from(pizzaTypes),
-    sizes: Array.from(sizes),
-    ingredients: Array.from(selectedIngredients),
-  }
-
   return {
-    filters,
+    sizes,
+    pizzaTypes,
+    selectedIngredients,
+    prices,
     setPrices: updatePrice,
     setPizzaTypes: togglePizzaTypes,
     setSizes: toggleSizes,
-    setIngredients: toggleIngredients,
+    setSelectedIngredients: toggleIngredients,
   }
 }
