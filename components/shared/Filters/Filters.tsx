@@ -2,59 +2,18 @@
 
 import { CheckboxFiltersGroup, RangeSlider, Title } from "@/components/shared"
 import { Input } from "@/components/ui"
-import { useFilterIngredients } from "@/hooks/useFilterIngredients"
-import { useEffect, useState } from "react"
-import { useSet } from "react-use"
+import { useEffect } from "react"
 import qs from "qs"
-import { useRouter, useSearchParams } from "next/navigation"
-
-interface PricesProps {
-  priceFrom?: number
-  priceTo?: number
-}
-
-interface QueryFilters extends PricesProps {
-  pizzaTypes: string
-  sizes: string
-  ingredients: string
-}
+import { useIngredients } from "@/hooks/useIngredients"
+import { useFilters } from "@/hooks/useFilters"
 
 export const Filters = () => {
-  const searchParams = useSearchParams() as unknown as Map<
-    keyof QueryFilters,
-    string
-  >
-  const router = useRouter()
-  const { ingredients, loading, onAddId, selectedIngredients } =
-    useFilterIngredients(searchParams.get("ingredients")?.split(","))
-
-  const [sizes, { toggle: toggleSizes }] = useSet(
-    new Set<string>(
-      searchParams.has("sizes") ? searchParams.get("sizes")?.split(",") : []
-    )
-  )
-  const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(
-    new Set<string>(
-      searchParams.has("pizzaTypes")
-        ? searchParams.get("pizzaTypes")?.split(",")
-        : []
-    )
-  )
-  const [prices, setPrices] = useState<PricesProps>({
-    priceFrom: Number(searchParams.get("priceFrom")) || undefined,
-    priceTo: Number(searchParams.get("priceTo")) || undefined,
-  })
+  const { ingredients, loading } = useIngredients()
+  const filters = useFilters()
   const items = ingredients.map((ingredient) => ({
     text: ingredient.name,
     value: String(ingredient.id),
   }))
-
-  const updatePrice = (name: keyof PricesProps, value: number) => {
-    setPrices({
-      ...prices,
-      [name]: value,
-    })
-  }
 
   useEffect(() => {
     const filters = {
