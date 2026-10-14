@@ -1,9 +1,10 @@
-'use client'
+"use client"
 
 import { ProductCard, Title } from "@/components/shared"
-import { useIntersection} from "react-use"
-import { useEffect, useRef } from "react"
+import * as React from "react"
+import { useIntersection } from "react-use"
 import { useCategoryStore } from "@/store/category"
+import { useEffect, useRef } from "react"
 
 interface Props {
   title: string
@@ -17,7 +18,8 @@ export const ProductsGroupList: React.FC<Props> = ({
   categoryId,
 }) => {
   const setActiveCategoryId = useCategoryStore((state) => state.setActiveId)
-  const intersectionRef = useRef(null)
+  const intersectionRef = useRef<HTMLDivElement>(null!)
+
   const intersection = useIntersection(intersectionRef, {
     threshold: 0.4,
   })
@@ -26,7 +28,7 @@ export const ProductsGroupList: React.FC<Props> = ({
     if (intersection?.isIntersecting) {
       setActiveCategoryId(categoryId)
     }
-  }, [categoryId, intersection?.isIntersecting, title])
+  }, [categoryId, intersection?.isIntersecting, setActiveCategoryId, title])
 
   return (
     <div className="scroll-mt-26" id={title} ref={intersectionRef}>
