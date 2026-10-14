@@ -1,30 +1,25 @@
 "use client"
 
-import {
-  CheckboxFiltersGroup,
-  FilterCheckbox,
-  RangeSlider,
-  Title,
-} from "@/components/shared"
+import { CheckboxFiltersGroup, RangeSlider, Title } from "@/components/shared"
 import { Input } from "@/components/ui"
 import { useFilterIngredients } from "@/hooks/useFilterIngredients"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSet } from "react-use"
+import qs from "qs"
+import { useRouter } from "next/navigation"
 
 interface PricesProps {
-  priceFrom: number
-  priceTo: number
+  priceFrom?: number
+  priceTo?: number
 }
 
 export const Filters = () => {
+  const router = useRouter()
   const { ingredients, loading, onAddId, selectedIngredients } =
     useFilterIngredients()
   const [sizes, { toggle: toggleSizes }] = useSet(new Set<string>([]))
   const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(new Set<string>([]))
-  const [prices, setPrices] = useState<PricesProps>({
-    priceFrom: 0,
-    priceTo: 1000,
-  })
+  const [prices, setPrices] = useState<PricesProps>({})
   const items = ingredients.map((ingredient) => ({
     text: ingredient.name,
     value: String(ingredient.id),
@@ -36,6 +31,20 @@ export const Filters = () => {
       [name]: value,
     })
   }
+
+  useEffect(() => {
+    const filters = {
+      ...prices,
+      pizzaTypes: Array.from(pizzaTypes),
+      sizes: Array.from(sizes),
+      ingredients: Array.from(selectedIngredients),
+    }
+    const query = qs.stringify(filters, {
+      arrayFormat: "comma",
+    })
+
+    router.push(`?${query}`)
+  }, [prices, pizzaTypes, sizes, selectedIngredients, router])
 
   return (
     <aside>
@@ -93,7 +102,7 @@ export const Filters = () => {
           min={0}
           max={1000}
           step={10}
-          value={[prices.priceFrom, prices.priceTo]}
+          value={[prices.priceFrom || 0, prices.priceTo || 1000]}
           onValueChange={([priceFrom, priceTo]) =>
             setPrices({ priceFrom, priceTo })
           }
