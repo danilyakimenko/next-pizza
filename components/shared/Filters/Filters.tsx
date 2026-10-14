@@ -6,20 +6,30 @@ import { useFilterIngredients } from "@/hooks/useFilterIngredients"
 import { useEffect, useState } from "react"
 import { useSet } from "react-use"
 import qs from "qs"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 
 interface PricesProps {
   priceFrom?: number
   priceTo?: number
 }
 
+interface QueryFilters extends PricesProps {
+  pizzaTypes: string
+  sizes: string
+  ingredients: string
+}
+
 export const Filters = () => {
+  const searchParams = useSearchParams() as unknown as Map<keyof QueryFilters, string>
   const router = useRouter()
   const { ingredients, loading, onAddId, selectedIngredients } =
     useFilterIngredients()
-  const [sizes, { toggle: toggleSizes }] = useSet(new Set<string>([]))
+  const [sizes, { toggle: toggleSizes }] = useSet(new Set<string>(searchParams.has('sizes') ? searchParams.get('sizes')?.split(',') : []))
   const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(new Set<string>([]))
-  const [prices, setPrices] = useState<PricesProps>({})
+  const [prices, setPrices] = useState<PricesProps>({
+    priceFrom: Number(searchParams.get("priceFrom")) || undefined,
+    priceTo: Number(searchParams.get("priceTo")) || undefined,
+  })
   const items = ingredients.map((ingredient) => ({
     text: ingredient.name,
     value: String(ingredient.id),
@@ -43,7 +53,9 @@ export const Filters = () => {
       arrayFormat: "comma",
     })
 
-    router.push(`?${query}`)
+    router.push(`?${query}`, {
+      scroll: false,
+    })
   }, [prices, pizzaTypes, sizes, selectedIngredients, router])
 
   return (
