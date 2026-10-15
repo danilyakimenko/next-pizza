@@ -1,6 +1,11 @@
 import { prisma } from "@/prisma/prisma-client"
 import { notFound } from "next/navigation"
-import { Container, ProductImage, Title } from "@/components/shared"
+import {
+  Container,
+  GroupVariants,
+  ProductImage,
+  Title,
+} from "@/components/shared"
 
 export default async function Page({ params }: { params: { id: string } }) {
   const { id } = await params
@@ -24,6 +29,24 @@ export default async function Page({ params }: { params: { id: string } }) {
             lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
             quod.
           </p>
+          <GroupVariants
+            selectedValue="2"
+            items={[
+              {
+                name: "Маленькая",
+                value: "1",
+              },
+              {
+                name: "Средняя",
+                value: "2",
+              },
+              {
+                name: "Большая",
+                value: "3",
+                disabled: true,
+              },
+            ]}
+          />
         </div>
       </div>
     </Container>
