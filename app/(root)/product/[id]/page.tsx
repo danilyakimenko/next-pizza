@@ -7,7 +7,7 @@ import {
   Title,
 } from "@/components/shared"
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function ProductPage({ params }: { params: { id: string } }) {
   const { id } = await params
   const product = await prisma.product.findFirst({ where: { id: Number(id) } })
 
