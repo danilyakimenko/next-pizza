@@ -1,8 +1,9 @@
 import { cn } from "cn"
+import React from "react"
 
 interface Props {
   imageUrl: string
-  size: number
+  size: 20 | 30 | 40
 }
 
 export const ProductImage: React.FC<Props> = ({ imageUrl, size }) => {
