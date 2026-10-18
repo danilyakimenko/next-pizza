@@ -15,7 +15,7 @@ export const ChooseProductModal: React.FC<Props> = ({ product }) => {
 
   return (
     <Dialog open={Boolean({ product })} onOpenChange={() => router.back()}>
-      <DialogContent className="w-[1060px] max-w-[calc(100vw-2rem)] overflow-hidden bg-white p-0">
+      <DialogContent className="max-w-[1060px]p-0 min-h-[500px] w-[1060px] overflow-hidden bg-white">
         <ChooseProductForm
           imageUrl={product.imageUrl}
           name={product.name}
