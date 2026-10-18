@@ -1,7 +1,10 @@
-import React from "react"
+'use client'
+
+import React, { useState } from "react"
 import { Button } from "@/shared/components/ui"
-import { PizzaImage, Title } from "@/shared/components/shared"
+import { GroupVariants, PizzaImage, Title } from "@/shared/components/shared"
 import { Ingredient, ProductItem } from "@prisma/client"
+import { PizzaSize, pizzaSizes, PizzaType } from "@/shared/constants/pizza"
 
 interface Props {
   imageUrl: string
@@ -20,9 +23,11 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   loading,
   onSubmit,
 }) => {
+  const [size, setSize] = useState<PizzaSize>(20)
+  const [type, setType] = useState<PizzaType>(1)
+
   const description = "30 см, традиционное тесто 30"
   const totalPrice = 350
-  const size = 30
 
   return (
     <div className="flex flex-1">
@@ -32,6 +37,8 @@ export const ChoosePizzaForm: React.FC<Props> = ({
         <Title text={name} size="md" className="mb-1 font-extrabold" />
 
         <p className="text-gray-400">{description}</p>
+
+        <GroupVariants items={pizzaSizes} selectedValue={String(size)} onClick={value => setSize(Number(value) as PizzaSize)} />
 
         <Button
           loading={loading}

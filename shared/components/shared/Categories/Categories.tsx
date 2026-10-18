@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { cn } from "cn"
-import { useCategoryStore } from "@/store/category"
+import { useCategoryStore } from "@/shared/store/category"
 import { Category } from "@prisma/client"
 
 interface Props {
