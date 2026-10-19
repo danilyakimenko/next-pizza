@@ -10,7 +10,7 @@ interface Props {
   onClick?: () => void
 }
 
-export const Ingredient: React.FC<Props> = ({
+export const IngredientItem: React.FC<Props> = ({
   imageUrl,
   name,
   price,
@@ -20,8 +20,8 @@ export const Ingredient: React.FC<Props> = ({
   return (
     <div
       className={cn(
-        "relative flex w-32 cursor-pointer flex-col items-center rounded-md bg-white p-1 text-center shadow-md",
-        { "border border-primary": active }
+        "relative flex w-32 cursor-pointer flex-col items-center rounded-md border bg-white p-1 text-center shadow-md border-transparent",
+        { "border-primary": active }
       )}
       onClick={onClick}
     >

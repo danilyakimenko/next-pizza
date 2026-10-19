@@ -2,7 +2,12 @@
 
 import React, { useState } from "react"
 import { Button } from "@/shared/components/ui"
-import { GroupVariants, PizzaImage, Title } from "@/shared/components/shared"
+import {
+  GroupVariants,
+  IngredientItem,
+  PizzaImage,
+  Title,
+} from "@/shared/components/shared"
 import { Ingredient, ProductItem } from "@prisma/client"
 import {
   PizzaSize,
@@ -10,6 +15,7 @@ import {
   PizzaType,
   pizzaTypes,
 } from "@/shared/constants/pizza"
+import { useSet } from "react-use"
 
 interface Props {
   imageUrl: string
@@ -30,10 +36,12 @@ export const ChoosePizzaForm: React.FC<Props> = ({
 }) => {
   const [size, setSize] = useState<PizzaSize>(20)
   const [type, setType] = useState<PizzaType>(1)
+  const [selectedIngredients, { toggle: addIngredient }] = useSet(new Set<number>([]))
 
   const description = "30 см, традиционное тесто 30"
-  const totalPrice = 350
-
+  const pizzaPrice = items.find((item) => item.pizzaType === type && item.size === size)?.price
+  const totalPrice = pizzaPrice
+  console.log(items)
   return (
     <div className="flex flex-1">
       <PizzaImage imageUrl={imageUrl} size={size} />
@@ -43,7 +51,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
 
         <p className="text-gray-400">{description}</p>
 
-        <div className="mt-5 grid gap-4">
+        <div className="my-5 grid gap-4">
           <GroupVariants
             items={pizzaSizes}
             selectedValue={String(size)}
@@ -56,8 +64,16 @@ export const ChoosePizzaForm: React.FC<Props> = ({
           />
         </div>
 
-        <div className="grid grid-cols-3 gap-3">
-
+        <div className="bg-gray-200 p-5 rounded-md h-[420px] overflow-auto scrollbar">
+          <div className="grid grid-cols-3 gap-3">
+            {ingredients.map((ingredient) => (
+              <IngredientItem
+                {...ingredient}
+                onClick={() => addIngredient(ingredient.id)}
+                active={selectedIngredients.has(ingredient.id)}
+                key={ingredient.id} />
+            ))}
+          </div>
         </div>
 
         <Button
