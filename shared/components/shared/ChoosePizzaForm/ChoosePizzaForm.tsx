@@ -1,10 +1,15 @@
-'use client'
+"use client"
 
 import React, { useState } from "react"
 import { Button } from "@/shared/components/ui"
 import { GroupVariants, PizzaImage, Title } from "@/shared/components/shared"
 import { Ingredient, ProductItem } from "@prisma/client"
-import { PizzaSize, pizzaSizes, PizzaType } from "@/shared/constants/pizza"
+import {
+  PizzaSize,
+  pizzaSizes,
+  PizzaType,
+  pizzaTypes,
+} from "@/shared/constants/pizza"
 
 interface Props {
   imageUrl: string
@@ -38,7 +43,22 @@ export const ChoosePizzaForm: React.FC<Props> = ({
 
         <p className="text-gray-400">{description}</p>
 
-        <GroupVariants items={pizzaSizes} selectedValue={String(size)} onClick={value => setSize(Number(value) as PizzaSize)} />
+        <div className="mt-5 grid gap-4">
+          <GroupVariants
+            items={pizzaSizes}
+            selectedValue={String(size)}
+            onClick={(value) => setSize(Number(value) as PizzaSize)}
+          />
+          <GroupVariants
+            items={pizzaTypes}
+            selectedValue={String(type)}
+            onClick={(value) => setType(Number(value) as PizzaType)}
+          />
+        </div>
+
+        <div className="grid grid-cols-3 gap-3">
+
+        </div>
 
         <Button
           loading={loading}
