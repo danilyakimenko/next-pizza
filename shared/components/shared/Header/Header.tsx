@@ -8,7 +8,7 @@ export const Header = () => {
   return (
     <header className="border border-b">
       <Container className="flex items-center justify-between py-8">
-        <Link className="flex items-center gap-4" href="/public">
+        <Link className="flex items-center gap-4" href="/">
           <Image src="/logo.png" alt="Logo" width={35} height={35} />
           <div>
             <h1 className="text-2xl font-black uppercase">Next Pizza</h1>
