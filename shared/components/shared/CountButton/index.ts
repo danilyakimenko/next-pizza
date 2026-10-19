@@ -1,1 +1,1 @@
-export { CountButton } from "./CountButton"
+export { CountButton, type CountButtonProps } from "./CountButton"
