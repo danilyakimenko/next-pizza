@@ -17,3 +17,4 @@ export * from "./Modals"
 export { ChooseProductForm } from "./ChooseProductForm"
 export { ChoosePizzaForm } from "./ChoosePizzaForm"
 export { IngredientItem } from './IngredientItem'
+export { CartButton } from './CartButton'
