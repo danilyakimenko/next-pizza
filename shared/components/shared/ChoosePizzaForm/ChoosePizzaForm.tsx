@@ -9,14 +9,9 @@ import {
   Title,
 } from "@/shared/components/shared"
 import { Ingredient, ProductItem } from "@prisma/client"
-import {
-  mapPizzaType,
-  PizzaSize,
-  PizzaType,
-  pizzaTypes,
-} from "@/shared/constants/pizza"
-import { calculatePizzaPrice } from "@/shared/lib"
+import { PizzaSize, PizzaType, pizzaTypes } from "@/shared/constants/pizza"
 import { usePizzaOptions } from "@/shared/hooks"
+import { getPizzaDetails } from "@/shared/lib"
 
 interface Props {
   imageUrl: string
@@ -35,10 +30,17 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   loading,
   onSubmit,
 }) => {
-  const { size, type, selectedIngredients, availableSizes, setSize, setType, addIngredient } = usePizzaOptions(items)
+  const {
+    size,
+    type,
+    selectedIngredients,
+    availableSizes,
+    setSize,
+    setType,
+    addIngredient,
+  } = usePizzaOptions(items)
 
-  const description = `${size} см, ${mapPizzaType[type]} тесто`
-  const totalPrice = calculatePizzaPrice(
+  const { totalPrice, textDetails } = getPizzaDetails(
     type,
     size,
     items,
@@ -57,7 +59,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
       <div className="w-[490px] bg-[#f7f6f5] p-7">
         <Title text={name} size="md" className="mb-1 font-extrabold" />
 
-        <p className="text-gray-400">{description}</p>
+        <p className="text-gray-400">{textDetails}</p>
 
         <div className="my-5 grid gap-4">
           <GroupVariants
