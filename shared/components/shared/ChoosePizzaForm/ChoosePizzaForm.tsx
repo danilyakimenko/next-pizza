@@ -15,8 +15,8 @@ import {
   PizzaType,
   pizzaTypes,
 } from "@/shared/constants/pizza"
-import { useSet } from "react-use"
-import { calculatePizzaPrice, getAvailablePizzaSizes } from "@/shared/lib"
+import { calculatePizzaPrice } from "@/shared/lib"
+import { usePizzaOptions } from "@/shared/hooks"
 
 interface Props {
   imageUrl: string
@@ -35,11 +35,8 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   loading,
   onSubmit,
 }) => {
-  const [size, setSize] = React.useState<PizzaSize>(20)
-  const [type, setType] = React.useState<PizzaType>(1)
-  const [selectedIngredients, { toggle: addIngredient }] = useSet(
-    new Set<number>([])
-  )
+  const { size, type, selectedIngredients, availableSizes, setSize, setType, addIngredient } = usePizzaOptions(items)
+
   const description = `${size} см, ${mapPizzaType[type]} тесто`
   const totalPrice = calculatePizzaPrice(
     type,
@@ -48,19 +45,6 @@ export const ChoosePizzaForm: React.FC<Props> = ({
     ingredients,
     selectedIngredients
   )
-
-  const availablePizzaSizes = getAvailablePizzaSizes(type, items)
-
-  React.useEffect(() => {
-    const isAvailableSize = availablePizzaSizes?.find(
-      (item) => Number(item.value) === size && !item.disabled
-    )
-    const availableSize = availablePizzaSizes?.find((item) => !item.disabled)
-
-    if (!isAvailableSize && availableSize) {
-      setSize(Number(availableSize.value) as PizzaSize)
-    }
-  }, [type])
 
   const handleClick = () => {
     onClickAddCart?.()
@@ -77,7 +61,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
 
         <div className="my-5 grid gap-4">
           <GroupVariants
-            items={availablePizzaSizes}
+            items={availableSizes}
             selectedValue={String(size)}
             onClick={(value) => setSize(Number(value) as PizzaSize)}
           />
