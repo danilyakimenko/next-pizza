@@ -33,6 +33,7 @@ export const GroupVariants: React.FC<Props> = ({
           )}
           onClick={() => onClick?.(value)}
           key={name}
+          disabled={disabled}
         >
           {name}
         </button>
