@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { Button } from "@/shared/components/ui"
 import {
   GroupVariants,
@@ -12,11 +12,11 @@ import { Ingredient, ProductItem } from "@prisma/client"
 import {
   mapPizzaType,
   PizzaSize,
-  pizzaSizes,
   PizzaType,
   pizzaTypes,
 } from "@/shared/constants/pizza"
 import { useSet } from "react-use"
+import { calculatePizzaPrice, getAvailablePizzaSizes } from "@/shared/lib"
 
 interface Props {
   imageUrl: string
@@ -35,36 +35,36 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   loading,
   onSubmit,
 }) => {
-  const [size, setSize] = useState<PizzaSize>(20)
-  const [type, setType] = useState<PizzaType>(1)
-  const [selectedIngredients, { toggle: addIngredient }] = useSet(new Set<number>([]))
-
+  const [size, setSize] = React.useState<PizzaSize>(20)
+  const [type, setType] = React.useState<PizzaType>(1)
+  const [selectedIngredients, { toggle: addIngredient }] = useSet(
+    new Set<number>([])
+  )
   const description = `${size} см, ${mapPizzaType[type]} тесто`
-  const pizzaPrice = items.find((item) => item.pizzaType === type && item.size === size)?.price || 0
-  const totalIngredientsPrice = ingredients
-    .filter((ingredient) => selectedIngredients.has(ingredient.id))
-    .reduce((acc, ingredient) => acc + ingredient.price, 0)
-  const totalPrice = pizzaPrice + totalIngredientsPrice
+  const totalPrice = calculatePizzaPrice(
+    type,
+    size,
+    items,
+    ingredients,
+    selectedIngredients
+  )
 
-  const handleClick = () => {
-    onClickAddCart?.()
-  }
+  const availablePizzaSizes = getAvailablePizzaSizes(type, items)
 
-  const availablePizzas = items.filter((item) => item.pizzaType === type)
-  const availablePizzaSizes = pizzaSizes.map(({ name, value }) => ({
-    name,
-    value,
-    disabled: !availablePizzas.some((pizza) => Number(pizza.size) === Number(value)),
-  }))
-
-  useEffect(() => {
-    const isAvailableSize = availablePizzaSizes?.find((item) => Number(item.value) === size && !item.disabled)
+  React.useEffect(() => {
+    const isAvailableSize = availablePizzaSizes?.find(
+      (item) => Number(item.value) === size && !item.disabled
+    )
     const availableSize = availablePizzaSizes?.find((item) => !item.disabled)
 
     if (!isAvailableSize && availableSize) {
       setSize(Number(availableSize.value) as PizzaSize)
     }
   }, [type])
+
+  const handleClick = () => {
+    onClickAddCart?.()
+  }
 
   return (
     <div className="flex flex-1">

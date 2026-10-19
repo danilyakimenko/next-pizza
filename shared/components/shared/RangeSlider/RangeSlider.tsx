@@ -3,7 +3,7 @@
 import React from "react"
 import * as SliderPrimitive from "@radix-ui/react-slider"
 
-import { cn } from "@/shared/lib/utils"
+import { cn } from "cn"
 
 type SliderProps = {
   className?: string
