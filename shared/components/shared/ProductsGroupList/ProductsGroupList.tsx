@@ -3,7 +3,7 @@
 import { ProductCard, Title } from "@/shared/components/shared"
 import * as React from "react"
 import { useIntersection } from "react-use"
-import { useCategoryStore } from "@/shared/store/category"
+import { useCategoryStore } from "@/shared/store"
 import { useEffect, useRef } from "react"
 
 interface Props {

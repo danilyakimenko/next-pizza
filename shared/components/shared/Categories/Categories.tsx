@@ -2,8 +2,9 @@
 
 import Link from "next/link"
 import { cn } from "cn"
-import { useCategoryStore } from "@/shared/store/category"
+import { useCategoryStore } from "@/shared/store"
 import { Category } from "@prisma/client"
+import React from "react"
 
 interface Props {
   items: Category[]
