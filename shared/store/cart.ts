@@ -1,4 +1,6 @@
 import { create } from "zustand"
+import { Api } from "@/shared/services/api-client"
+import { getCartDetails } from "@/shared/lib"
 
 export type ICartItem = {
   id: number
@@ -31,17 +33,17 @@ export const useCartStore = create<CartState>((set, get) => ({
 
   fetchCartItems: async () => {
     try {
-      set({ loading: true, error: false})
+      set({ loading: true, error: false })
       const data = await Api.cart.fetchCart()
       set(getCartDetails(data))
     } catch (error) {
       console.error(error)
-      set({ error: true})
+      set({ error: true })
     } finally {
-      set({ loading: false})
+      set({ loading: false })
     }
   },
   removeCartItems: async (id: number) => {},
   updateItemQuantity: async (id: number, quantity: number) => {},
-  addCartItem: async (values: any) => {}
+  addCartItem: async (values: any) => {},
 }))
