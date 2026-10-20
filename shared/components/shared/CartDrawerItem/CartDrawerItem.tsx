@@ -13,7 +13,7 @@ export const CartDrawerItem: React.FC<CartItemProps> = ({
   details,
 }) => {
   return (
-    <div className="flex gap-6 bg-white p-5">
+    <div className="flex gap-6 bg-gray-200 rounded-2xl p-5">
       <CartItem.Image src={imageUrl} />
 
       <div className="flex-1">
