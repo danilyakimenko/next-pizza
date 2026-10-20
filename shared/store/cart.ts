@@ -2,17 +2,6 @@ import { create } from "zustand"
 import { Api } from "@/shared/services/api-client"
 import { getCartDetails } from "@/shared/lib"
 
-export type ICartItem = {
-  id: number
-  quantity: number
-  name: string
-  imageUrl: string
-  price: number
-  pizzaSize?: number | null
-  type?: number | null
-  ingredients: Array<{ name: string; price: number }>
-}
-
 export interface CartState {
   loading: boolean
   error: boolean
