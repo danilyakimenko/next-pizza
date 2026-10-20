@@ -24,7 +24,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
       <SheetContent className="flex w-[500px] flex-col justify-between bg-gray-100 pb-0">
         <SheetHeader>
           <SheetTitle>
-            В корзине <span className="font-bold">3 товара</span>
+            В корзине <span className="font-bold text-primary">3 товара</span>
           </SheetTitle>
         </SheetHeader>
 
