@@ -1,12 +1,13 @@
 import { create } from "zustand"
 import { Api } from "@/shared/services/api-client"
 import { getCartDetails } from "@/shared/lib"
+import { CartStateItem } from "@/shared/lib/getCartDetails"
 
 export interface CartState {
   loading: boolean
   error: boolean
   totalAmount: number
-  items: ICartItem[]
+  items: CartStateItem[]
 
   fetchCartItems: () => Promise<void>
   updateItemQuantity: (id: number, quantity: number) => Promise<void>
