@@ -1,11 +1,9 @@
-'use client'
+"use client"
 
 import {
   Button,
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -16,8 +14,23 @@ import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { CartDrawerItem } from "@/shared/components/shared"
 import { getCartItemDetails } from "@/shared/lib"
+import { useCartStore } from "@/shared/store"
+import { PizzaSize, PizzaType } from "@/shared/constants/pizza"
+import { useShallow } from "zustand/react/shallow"
 
 export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
+  const [totalAmount, fetchCartItems, items] = useCartStore(
+    useShallow((state) => [
+      state.totalAmount,
+      state.fetchCartItems,
+      state.items,
+    ])
+  )
+
+  React.useEffect(() => {
+    fetchCartItems()
+  }, [])
+
   return (
     <Sheet>
       <SheetTrigger asChild>{children}</SheetTrigger>
@@ -28,59 +41,37 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
           </SheetTitle>
         </SheetHeader>
 
-        <div className="flex flex-col mt-5 overflow-auto scrollbar flex-1 gap-4 p-3">
-          <CartDrawerItem
-            id={1}
-            imageUrl={
-              "https://media.dodostatic.net/image/r:233x233/11EE7D61304FAF5A98A6958F2BB2D260.webp"
-            }
-            details={getCartItemDetails(2, 30, [
-              { name: "Цыпленок" },
-              { name: "Сыр" },
-            ])}
-            name={"Чоризо фреш"}
-            price={400}
-            quantity={1}
-          />
-          <CartDrawerItem
-            id={1}
-            imageUrl={
-              "https://media.dodostatic.net/image/r:233x233/11EE7D61304FAF5A98A6958F2BB2D260.webp"
-            }
-            details={getCartItemDetails(2, 30, [
-              { name: "Цыпленок" },
-              { name: "Сыр" },
-            ])}
-            name={"Чоризо фреш"}
-            price={400}
-            quantity={1}
-          />
-          <CartDrawerItem
-            id={1}
-            imageUrl={
-              "https://media.dodostatic.net/image/r:233x233/11EE7D61304FAF5A98A6958F2BB2D260.webp"
-            }
-            details={getCartItemDetails(2, 30, [
-              { name: "Цыпленок" },
-              { name: "Сыр" },
-            ])}
-            name={"Чоризо фреш"}
-            price={400}
-            quantity={1}
-          />
-          <CartDrawerItem
-            id={1}
-            imageUrl={
-              "https://media.dodostatic.net/image/r:233x233/11EE7D61304FAF5A98A6958F2BB2D260.webp"
-            }
-            details={getCartItemDetails(2, 30, [
-              { name: "Цыпленок" },
-              { name: "Сыр" },
-            ])}
-            name={"Чоризо фреш"}
-            price={400}
-            quantity={1}
-          />
+        <div className="scrollbar mt-5 flex flex-1 flex-col gap-4 overflow-auto p-3">
+          {items.map(
+            ({
+              id,
+              imageUrl,
+              ingredients,
+              pizzaSize,
+              pizzaType,
+              name,
+              price,
+              quantity,
+            }) => (
+              <CartDrawerItem
+                id={id}
+                imageUrl={imageUrl}
+                details={
+                  pizzaSize && pizzaType
+                    ? getCartItemDetails(
+                        ingredients,
+                        pizzaType as PizzaType,
+                        pizzaSize as PizzaSize
+                      )
+                    : ""
+                }
+                name={name}
+                price={price}
+                quantity={quantity}
+                key={id}
+              />
+            )
+          )}
         </div>
 
         <SheetFooter className="p-8">
@@ -90,7 +81,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
                 Итого
                 <div className="relative -top-1 mx-2 flex-1 border-b border-dashed border-b-neutral-200" />
               </span>
-              <span className="text-lg font-bold">500 ₽</span>
+              <span className="text-lg font-bold">{totalAmount} ₽</span>
             </div>
             <Link href="/cart">
               <Button className="h-12 w-full text-base" type="submit">

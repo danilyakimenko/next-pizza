@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
       }
     })
 
-    return NextResponse.json({userCart})
+    return NextResponse.json(userCart)
   } catch (error) {
     console.log(error)
   }
