@@ -5,7 +5,6 @@ import { CountButton } from "@/shared/components/shared"
 import { Trash2Icon } from "lucide-react"
 
 export const CartDrawerItem: React.FC<CartItemProps> = ({
-  id,
   imageUrl,
   name,
   price,
