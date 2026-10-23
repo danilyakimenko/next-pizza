@@ -36,6 +36,10 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(userCart)
   } catch (error) {
-    console.log(error)
+    console.log("[CART_GET] Server error", error)
+    return NextResponse.json(
+      { message: "Не удалось получить корзину" },
+      { status: 500 }
+    )
   }
 }
