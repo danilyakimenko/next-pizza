@@ -46,3 +46,44 @@ export async function PATCH(
     )
   }
 }
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id: idParam } = await params
+    const id = Number(idParam)
+    const token = request.cookies.get("cartToken")?.value
+
+    if (!token) {
+      return NextResponse.json({ error: "Cart token not found" })
+    }
+
+    const cartItem = await prisma.cartItem.findFirst({
+      where: {
+        id,
+      },
+    })
+
+    if (!cartItem) {
+      return NextResponse.json({ error: "Cart item not found" })
+    }
+
+    await prisma.cartItem.delete({
+      where: {
+        id,
+      }
+    })
+
+    const updatedUserCart = await updateCartTotalAmount(token)
+
+    return NextResponse.json(updatedUserCart)
+  } catch (error) {
+    console.error("[CART_PATCH] Server error", error)
+    return NextResponse.json(
+      { message: "Не удалось обновить корзину" },
+      { status: 500 }
+    )
+  }
+}

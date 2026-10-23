@@ -19,11 +19,12 @@ import { PizzaSize, PizzaType } from "@/shared/constants/pizza"
 import { useShallow } from "zustand/react/shallow"
 
 export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const [totalAmount, fetchCartItems, updateItemQuantity, items] = useCartStore(
+  const [totalAmount, fetchCartItems, updateItemQuantity, removeCartItem, items] = useCartStore(
     useShallow((state) => [
       state.totalAmount,
       state.fetchCartItems,
       state.updateItemQuantity,
+      state.removeCartItem,
       state.items,
     ])
   )
@@ -90,7 +91,10 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
                 name={name}
                 price={price}
                 quantity={quantity}
-                onCountButtonClick={(type) => onCountButtonClick(id, quantity, type)}
+                onCountButtonClick={(type) =>
+                  onCountButtonClick(id, quantity, type)
+                }
+                onRemoveButtonClick={() => removeCartItem(id)}
                 key={id}
               />
             )
