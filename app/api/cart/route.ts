@@ -3,10 +3,10 @@ import { prisma } from "@/prisma/prisma-client"
 
 export async function GET(request: NextRequest) {
   try {
-    const token = request.cookies.get('cartToken')?.value
+    const token = request.cookies.get("cartToken")?.value
 
     if (!token) {
-      return NextResponse.json({totalAmount: 0, items: []})
+      return NextResponse.json({ totalAmount: 0, items: [] })
     }
 
     const userCart = await prisma.cart.findFirst({
@@ -14,24 +14,24 @@ export async function GET(request: NextRequest) {
         OR: [
           {
             token,
-          }
-        ]
+          },
+        ],
       },
       include: {
         items: {
           orderBy: {
-            createdAt: 'desc'
+            createdAt: "desc",
           },
           include: {
             productItem: {
               include: {
                 product: true,
-              }
+              },
             },
             ingredients: true,
-          }
-        }
-      }
+          },
+        },
+      },
     })
 
     return NextResponse.json(userCart)
