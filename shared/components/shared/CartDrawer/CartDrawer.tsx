@@ -31,13 +31,29 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
     fetchCartItems()
   }, [])
 
+  const itemsCounter = items.length
+  const getItemsWord = (count: number) => {
+    if (count % 10 === 1 && count % 100 !== 11) return "товар"
+    if (
+      count % 10 >= 2 &&
+      count % 10 <= 4 &&
+      (count % 100 < 12 || count % 100 > 14)
+    )
+      return "товара"
+
+    return "товаров"
+  }
+
   return (
     <Sheet>
       <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent className="flex w-[500px] flex-col justify-between bg-gray-100 pb-0">
         <SheetHeader>
           <SheetTitle>
-            В корзине <span className="font-bold text-primary">3 товара</span>
+            В корзине
+            <span className="font-bold text-primary">
+              &nbsp;{itemsCounter}&nbsp;{getItemsWord(itemsCounter)}
+            </span>
           </SheetTitle>
         </SheetHeader>
 
