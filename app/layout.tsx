@@ -1,6 +1,7 @@
 import React from "react"
 import { Nunito } from "next/font/google"
 import "./globals.css"
+import { Toaster } from "react-hot-toast"
 
 const nunito = Nunito({
   subsets: ["cyrillic"],
@@ -19,7 +20,7 @@ export default function GlobalLayout({
       suppressHydrationWarning
       className={nunito.className}
     >
-      <body>{children}</body>
+      <body>{children}<Toaster /></body>
     </html>
   )
 }

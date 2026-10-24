@@ -24,11 +24,15 @@ export const ChooseProductModal: React.FC<Props> = ({ product }) => {
     })
   }
 
-  const onAddPizza = (productItemId: number, ingredients: number[]) => {
-    addCartItem({
-      productItemId,
-      ingredients,
-    })
+  const onAddPizza = async (productItemId: number, ingredients: number[]) => {
+    try {
+      await addCartItem({
+        productItemId,
+        ingredients,
+      })
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
