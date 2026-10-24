@@ -22,22 +22,19 @@ export const ChooseProductModal: React.FC<Props> = ({ product }) => {
     useShallow((state) => [state.addCartItem, state.loading])
   )
 
-  const onAddProduct = () => {
-    addCartItem({
-      productItemId: firstItem.id,
-    })
-  }
-
-  const onAddPizza = async (productItemId: number, ingredients: number[]) => {
+  const onSubmit = async (productItemId?: number, ingredients?: number[]) => {
     try {
+      const itemId = productItemId ?? firstItem.id
+
       await addCartItem({
-        productItemId,
+        productItemId: itemId,
         ingredients,
       })
-      toast.success("Пицца добавлена в корзину")
+
+      toast.success(`Товар добавлен в корзину`)
       router.back()
     } catch (error) {
-      toast.error("Не удалось добавить пиццу в корзину")
+      toast.error(`Не удалось добавить товар в корзину`)
       console.error(error)
     }
   }
@@ -51,7 +48,7 @@ export const ChooseProductModal: React.FC<Props> = ({ product }) => {
             name={name}
             ingredients={ingredients}
             items={items}
-            onSubmit={onAddPizza}
+            onSubmit={onSubmit}
             loading={loading}
           />
         ) : (
@@ -59,7 +56,7 @@ export const ChooseProductModal: React.FC<Props> = ({ product }) => {
             imageUrl={imageUrl}
             name={name}
             price={firstItem.price}
-            onSubmit={onAddProduct}
+            onSubmit={onSubmit}
             loading={loading}
           />
         )}
