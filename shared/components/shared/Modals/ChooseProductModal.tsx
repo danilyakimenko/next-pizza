@@ -7,6 +7,7 @@ import { ChoosePizzaForm, ChooseProductForm } from "@/shared/components/shared"
 import { ProductWithRelations } from "@/@types/prisma"
 import { useCartStore } from "@/shared/store"
 import toast from "react-hot-toast"
+import { useShallow } from "zustand/react/shallow"
 
 interface Props {
   product: ProductWithRelations
@@ -17,7 +18,9 @@ export const ChooseProductModal: React.FC<Props> = ({ product }) => {
   const router = useRouter()
   const firstItem = product.items[0]
   const isPizzaForm = Boolean(firstItem.pizzaType)
-  const addCartItem = useCartStore((state) => state.addCartItem)
+  const [addCartItem, loading] = useCartStore(
+    useShallow((state) => [state.addCartItem, state.loading])
+  )
 
   const onAddProduct = () => {
     addCartItem({
@@ -32,6 +35,7 @@ export const ChooseProductModal: React.FC<Props> = ({ product }) => {
         ingredients,
       })
       toast.success("Пицца добавлена в корзину")
+      router.back()
     } catch (error) {
       toast.error("Не удалось добавить пиццу в корзину")
       console.error(error)
@@ -48,6 +52,7 @@ export const ChooseProductModal: React.FC<Props> = ({ product }) => {
             ingredients={ingredients}
             items={items}
             onSubmit={onAddPizza}
+            loading={loading}
           />
         ) : (
           <ChooseProductForm
@@ -55,6 +60,7 @@ export const ChooseProductModal: React.FC<Props> = ({ product }) => {
             name={name}
             price={firstItem.price}
             onSubmit={onAddProduct}
+            loading={loading}
           />
         )}
       </DialogContent>

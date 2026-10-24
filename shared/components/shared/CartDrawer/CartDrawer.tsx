@@ -53,7 +53,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
 
   return (
     <Sheet>
-      <SheetTrigger asChild>{children}</SheetTrigger>
+      <SheetTrigger render={children as React.ReactElement} />
       <SheetContent className="flex w-[500px] flex-col justify-between bg-gray-100 pb-0">
         <SheetHeader>
           <SheetTitle>
