@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import { ChoosePizzaForm, ChooseProductForm } from "@/shared/components/shared"
 import { ProductWithRelations } from "@/@types/prisma"
 import { useCartStore } from "@/shared/store"
+import toast from "react-hot-toast"
 
 interface Props {
   product: ProductWithRelations
@@ -30,7 +31,9 @@ export const ChooseProductModal: React.FC<Props> = ({ product }) => {
         productItemId,
         ingredients,
       })
+      toast.success("Пицца добавлена в корзину")
     } catch (error) {
+      toast.error("Не удалось добавить пиццу в корзину")
       console.error(error)
     }
   }
