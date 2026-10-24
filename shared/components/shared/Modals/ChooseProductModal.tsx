@@ -5,15 +5,31 @@ import { Dialog, DialogContent } from "@/shared/components/ui"
 import { useRouter } from "next/navigation"
 import { ChoosePizzaForm, ChooseProductForm } from "@/shared/components/shared"
 import { ProductWithRelations } from "@/@types/prisma"
+import { useCartStore } from "@/shared/store"
 
 interface Props {
   product: ProductWithRelations
 }
 
 export const ChooseProductModal: React.FC<Props> = ({ product }) => {
-  const router = useRouter()
   const { imageUrl, name, ingredients, items } = product
-  const isPizzaForm = Boolean(items[0].pizzaType)
+  const router = useRouter()
+  const firstItem = product.items[0]
+  const isPizzaForm = Boolean(firstItem.pizzaType)
+  const addCartItem = useCartStore((state) => state.addCartItem)
+
+  const onAddProduct = () => {
+    addCartItem({
+      productItemId: firstItem.id,
+    })
+  }
+
+  const onAddPizza = (productItemId: number, ingredients: number[]) => {
+    addCartItem({
+      productItemId,
+      ingredients,
+    })
+  }
 
   return (
     <Dialog open={Boolean({ product })} onOpenChange={() => router.back()}>
@@ -24,9 +40,15 @@ export const ChooseProductModal: React.FC<Props> = ({ product }) => {
             name={name}
             ingredients={ingredients}
             items={items}
+            onSubmit={onAddPizza}
           />
         ) : (
-          <ChooseProductForm imageUrl={imageUrl} name={name} />
+          <ChooseProductForm
+            imageUrl={imageUrl}
+            name={name}
+            price={firstItem.price}
+            onSubmit={onAddProduct}
+          />
         )}
       </DialogContent>
     </Dialog>

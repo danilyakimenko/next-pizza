@@ -35,6 +35,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
     type,
     selectedIngredients,
     availableSizes,
+    currentItemId,
     setSize,
     setType,
     addIngredient,
@@ -49,7 +50,9 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   )
 
   const handleClick = () => {
-    onClickAddCart?.()
+    if (currentItemId) {
+      onSubmit(currentItemId, Array.from(selectedIngredients))
+    }
   }
 
   return (
