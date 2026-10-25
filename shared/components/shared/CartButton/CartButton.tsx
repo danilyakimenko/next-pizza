@@ -15,7 +15,7 @@ export const CartButton = () => {
     <CartDrawer>
       <Button
         className={cn("group relative", { "w-[105px]": loading })}
-        disabled={loading}
+        loading={loading}
       >
         <b>{totalAmount} ₽</b>
         <span className="mx-3 h-full w-px bg-white/30" />

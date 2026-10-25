@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import qs from "qs"
-import { Filters } from "@/hooks/useFilters"
+import { Filters } from "./useFilters"
 
 export const useQueryFilters = (filters: Filters) => {
   const router = useRouter()
