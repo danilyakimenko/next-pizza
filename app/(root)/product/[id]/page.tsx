@@ -1,11 +1,14 @@
 import { prisma } from "@/prisma/prisma-client"
 import { notFound } from "next/navigation"
 import {
+  ChoosePizzaForm,
+  ChooseProductForm,
   Container,
-  GroupVariants,
-  PizzaImage,
-  Title,
 } from "@/shared/components/shared"
+import React from "react"
+import toast from "react-hot-toast"
+import { useCartStore } from "@/shared/store"
+import { useShallow } from "zustand/react/shallow"
 
 export default async function ProductPage({
   params,
@@ -26,47 +29,57 @@ export default async function ProductPage({
           },
         },
       },
+      items: true,
     },
   })
+
+  const [addCartItem, loading] = useCartStore(
+    useShallow((state) => [state.addCartItem, state.loading])
+  )
 
   if (!product) {
     return notFound()
   }
 
+  const firstItem = product.items[0]
+  const isPizzaForm = Boolean(firstItem.pizzaType)
+
+  const onSubmit = async (productItemId?: number, ingredients?: number[]) => {
+    try {
+      const itemId = productItemId ?? firstItem.id
+
+      await addCartItem({
+        productItemId: itemId,
+        ingredients,
+      })
+
+      toast.success(`Товар добавлен в корзину`)
+    } catch (error) {
+      toast.error(`Не удалось добавить товар в корзину`)
+      console.error(error)
+    }
+  }
+
   return (
     <Container className="my-10 flex flex-col">
-      <div className="flex flex-1">
-        <PizzaImage imageUrl={product.imageUrl} size={40} />
-        <div className="w-[490px] bg-gray-200 p-7">
-          <Title
-            className="mb-1 font-extrabold"
-            size="md"
-            text={product.name}
-          />
-          <p className="text-gray-400">
-            lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-            quod.
-          </p>
-          <GroupVariants
-            selectedValue="2"
-            items={[
-              {
-                name: "Маленькая",
-                value: "1",
-              },
-              {
-                name: "Средняя",
-                value: "2",
-              },
-              {
-                name: "Большая",
-                value: "3",
-                disabled: true,
-              },
-            ]}
-          />
-        </div>
-      </div>
+      {isPizzaForm ? (
+        <ChoosePizzaForm
+          imageUrl={product.imageUrl}
+          name={product.name}
+          ingredients={product.ingredients}
+          items={product.items}
+          onSubmit={onSubmit}
+          loading={loading}
+        />
+      ) : (
+        <ChooseProductForm
+          imageUrl={product.imageUrl}
+          name={product.name}
+          price={firstItem.price}
+          onSubmit={onSubmit}
+          loading={loading}
+        />
+      )}
     </Container>
   )
 }
