@@ -7,11 +7,14 @@ import { ProductWithRelations } from "@/@types/prisma"
 import React from "react"
 import { ChoosePizzaForm, ChooseProductForm } from "@/shared/components/shared"
 
+import { useRouter } from "next/navigation"
+
 interface Props {
   product: ProductWithRelations
 }
 
 export const ProductForm: React.FC<Props> = ({ product }) => {
+  const router = useRouter()
   const [addCartItem, loading] = useCartStore(
     useShallow((state) => [state.addCartItem, state.loading])
   )
@@ -26,8 +29,8 @@ export const ProductForm: React.FC<Props> = ({ product }) => {
         productItemId: itemId,
         ingredients,
       })
-
       toast.success(`Товар добавлен в корзину`)
+      router.back()
     } catch (error) {
       toast.error(`Не удалось добавить товар в корзину`)
       console.error(error)
