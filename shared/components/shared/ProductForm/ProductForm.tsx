@@ -11,9 +11,10 @@ import { useRouter } from "next/navigation"
 
 interface Props {
   product: ProductWithRelations
+  onSubmit?: VoidFunction
 }
 
-export const ProductForm: React.FC<Props> = ({ product }) => {
+export const ProductForm: React.FC<Props> = ({ product, onSubmit: _onSubmit }) => {
   const router = useRouter()
   const [addCartItem, loading] = useCartStore(
     useShallow((state) => [state.addCartItem, state.loading])
@@ -30,7 +31,7 @@ export const ProductForm: React.FC<Props> = ({ product }) => {
         ingredients,
       })
       toast.success(`Товар добавлен в корзину`)
-      router.back()
+      _onSubmit?.()
     } catch (error) {
       toast.error(`Не удалось добавить товар в корзину`)
       console.error(error)
