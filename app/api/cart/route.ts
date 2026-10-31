@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
       where: {
         cartId: userCart.id,
         productItemId: data.productItemId,
-        ingredients: { every: { id: { in: data.ingredients } }, some: {} },
+        ingredients: { every: { id: { in: data.ingredients } } },
       },
     })
 

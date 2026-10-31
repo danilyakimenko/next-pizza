@@ -2,7 +2,7 @@
 
 import {
   Button,
-  Sheet,
+  Sheet, SheetClose,
   SheetContent,
   SheetFooter,
   SheetHeader,
@@ -11,15 +11,23 @@ import {
 } from "@/shared/components/ui"
 import React from "react"
 import Link from "next/link"
-import { ArrowRight } from "lucide-react"
-import { CartDrawerItem } from "@/shared/components/shared"
+import { ArrowLeft, ArrowRight } from "lucide-react"
+import { CartDrawerItem, Title } from "@/shared/components/shared"
 import { getCartItemDetails } from "@/shared/lib"
 import { useCartStore } from "@/shared/store"
 import { PizzaSize, PizzaType } from "@/shared/constants/pizza"
 import { useShallow } from "zustand/react/shallow"
+import Image from "next/image"
+import { cn } from "cn"
 
 export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const [totalAmount, fetchCartItems, updateItemQuantity, removeCartItem, items] = useCartStore(
+  const [
+    totalAmount,
+    fetchCartItems,
+    updateItemQuantity,
+    removeCartItem,
+    items,
+  ] = useCartStore(
     useShallow((state) => [
       state.totalAmount,
       state.fetchCartItems,
@@ -46,8 +54,12 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
     return "товаров"
   }
 
-  const onCountButtonClick = (id: number, quantity: number, type: 'plus' | 'minus') => {
-    const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1
+  const onCountButtonClick = (
+    id: number,
+    quantity: number,
+    type: "plus" | "minus"
+  ) => {
+    const newQuantity = type === "plus" ? quantity + 1 : quantity - 1
     updateItemQuantity(id, newQuantity)
   }
 
@@ -55,71 +67,103 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
     <Sheet>
       <SheetTrigger render={children as React.ReactElement} />
       <SheetContent className="flex w-[500px] flex-col justify-between bg-gray-100 pb-0">
-        <SheetHeader>
-          <SheetTitle>
-            В корзине
-            <span className="font-bold text-primary">
-              &nbsp;{itemsCounter}&nbsp;{getItemsWord(itemsCounter)}
-            </span>
-          </SheetTitle>
-        </SheetHeader>
+        <div className={cn('flex flex-col h-full', !totalAmount && 'justify-center')}>
+          {totalAmount > 0 && (
+            <SheetHeader>
+              <SheetTitle>
+                В корзине
+                <span className="font-bold text-primary">
+                  &nbsp;{itemsCounter}&nbsp;{getItemsWord(itemsCounter)}
+                </span>
+              </SheetTitle>
+            </SheetHeader>
+          )}
 
-        <div className="scrollbar mt-5 flex flex-1 flex-col gap-4 overflow-auto p-3">
-          {items.map(
-            ({
-              id,
-              imageUrl,
-              ingredients,
-              pizzaSize,
-              pizzaType,
-              name,
-              price,
-              disabled,
-              quantity,
-            }) => (
-              <CartDrawerItem
-                id={id}
-                imageUrl={imageUrl}
-                details={
-                  pizzaSize && pizzaType
-                    ? getCartItemDetails(
-                        ingredients,
-                        pizzaType as PizzaType,
-                        pizzaSize as PizzaSize
-                      )
-                    : ""
-                }
-                disabled={disabled}
-                name={name}
-                price={price}
-                quantity={quantity}
-                onCountButtonClick={(type) =>
-                  onCountButtonClick(id, quantity, type)
-                }
-                onRemoveButtonClick={() => removeCartItem(id)}
-                key={id}
+          {!totalAmount && (
+            <div className="mx-auto flex w-72 flex-col items-center justify-center">
+              <Image
+                src="/assets/images/empty-box.png"
+                alt="Empty cart"
+                width={120}
+                height={120}
               />
-            )
+              <Title
+                className="my-2 text-center font-bold"
+                size="sm"
+                text="Корзина пустая"
+              />
+              <p className="mb-5 text-center text-neutral-500">
+                Добавьте хотя бы один продукт в корзину, чтобы совершить заказ
+              </p>
+              <SheetClose>
+                <Button className="h-12 w-56 text-base" size="lg">
+                  <ArrowLeft className="mr-2" size={20} />
+                  Вернуться назад
+                </Button>
+              </SheetClose>
+            </div>
+          )}
+
+          {totalAmount > 0 && (
+            <>
+              <div className="scrollbar mt-5 flex flex-1 flex-col gap-4 overflow-auto p-3">
+                {items.map(
+                  ({
+                    id,
+                    imageUrl,
+                    ingredients,
+                    pizzaSize,
+                    pizzaType,
+                    name,
+                    price,
+                    disabled,
+                    quantity,
+                  }) => (
+                    <CartDrawerItem
+                      id={id}
+                      imageUrl={imageUrl}
+                      details={
+                        pizzaSize && pizzaType
+                          ? getCartItemDetails(
+                              ingredients,
+                              pizzaType as PizzaType,
+                              pizzaSize as PizzaSize
+                            )
+                          : ""
+                      }
+                      disabled={disabled}
+                      name={name}
+                      price={price}
+                      quantity={quantity}
+                      onCountButtonClick={(type) =>
+                        onCountButtonClick(id, quantity, type)
+                      }
+                      onRemoveButtonClick={() => removeCartItem(id)}
+                      key={id}
+                    />
+                  )
+                )}
+              </div>
+              <SheetFooter className="p-8">
+                <div className="w-full">
+                  <div className="mb-4 flex">
+                    <span className="flex flex-1 text-lg text-neutral-500">
+                      Итого
+                      <div className="relative -top-1 mx-2 flex-1 border-b border-dashed border-b-neutral-200" />
+                    </span>
+                    <span className="text-lg font-bold">{totalAmount} ₽</span>
+                  </div>
+                  <Link href="/cart">
+                    <Button className="h-12 w-full text-base" type="submit">
+                      Оформить заказ
+                      <ArrowRight className="ml-2" size={20} />
+                    </Button>
+                  </Link>
+                </div>
+              </SheetFooter>
+            </>
           )}
         </div>
-
-        <SheetFooter className="p-8">
-          <div className="w-full">
-            <div className="mb-4 flex">
-              <span className="flex flex-1 text-lg text-neutral-500">
-                Итого
-                <div className="relative -top-1 mx-2 flex-1 border-b border-dashed border-b-neutral-200" />
-              </span>
-              <span className="text-lg font-bold">{totalAmount} ₽</span>
-            </div>
-            <Link href="/cart">
-              <Button className="h-12 w-full text-base" type="submit">
-                Оформить заказ
-                <ArrowRight className="ml-2" size={20} />
-              </Button>
-            </Link>
-          </div>
-        </SheetFooter>
       </SheetContent>
     </Sheet>
   )
