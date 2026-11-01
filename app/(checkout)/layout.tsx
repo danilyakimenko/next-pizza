@@ -1,10 +1,9 @@
 import type { Metadata } from "next"
 import React from "react"
+import { Container, Header } from "@/shared/components/shared"
 
 export const metadata: Metadata = {
   title: "Next Pizza | Корзина",
-  description:
-    "Next Pizza - это онлайн-магазин, где вы можете купить пиццу и другие блюда.",
 }
 
 export default function CheckoutLayout({
@@ -12,5 +11,12 @@ export default function CheckoutLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return <main className="min-h-screen bg-[F4F1EE]">{children}</main>
+  return (
+    <>
+      <Container>
+        <Header className="border-b-gray-200" hasSearch={false} hasCart={false} />
+        <main className="min-h-screen bg-[F4F1EE]">{children}</main>
+      </Container>
+    </>
+  )
 }
