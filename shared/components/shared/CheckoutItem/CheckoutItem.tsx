@@ -4,6 +4,7 @@ import React from "react"
 import { CartItemProps } from "../CartItemDetails"
 import { Trash2Icon } from "lucide-react"
 import * as CartItemDetails from "../CartItemDetails"
+import { cn } from "cn"
 
 interface Props extends CartItemProps {
   onClickCountButton?: (type: "plus" | "minus") => void
@@ -15,13 +16,16 @@ export const CheckoutItem: React.FC<Props> = ({
   name,
   price,
   quantity,
+  disabled,
   details,
   onClickCountButton,
   onClickRemove,
 }) => {
   return (
     <div
-      className="flex items-center justify-between"
+      className={cn("flex items-center justify-between", {
+        "pointer-events-none opacity-50": disabled}
+      )}
     >
       <div className="flex items-center gap-5 flex-1">
         <CartItemDetails.Image src={imageUrl} />

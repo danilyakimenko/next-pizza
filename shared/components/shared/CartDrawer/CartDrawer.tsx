@@ -22,6 +22,7 @@ import { useCart } from "@/shared/hooks"
 
 export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
   const { totalAmount, updateItemQuantity, items, removeCartItem } = useCart()
+  const [redirecting, setRedirecting] = React.useState(false)
 
   const itemsCounter = items.length
   const getItemsWord = (count: number) => {
@@ -136,8 +137,13 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
                     </span>
                     <span className="text-lg font-bold">{totalAmount} ₽</span>
                   </div>
-                  <Link href="/cart">
-                    <Button className="h-12 w-full text-base" type="submit">
+                  <Link href="/checkout">
+                    <Button
+                      className="h-12 w-full text-base"
+                      type="submit"
+                      loading={redirecting}
+                      onClick={() => setRedirecting(true)}
+                    >
                       Оформить заказ
                       <ArrowRight className="ml-2" size={20} />
                     </Button>
