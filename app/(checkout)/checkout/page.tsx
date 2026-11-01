@@ -71,7 +71,21 @@ export default function CheckoutPage() {
             </div>
           </CheckoutCard>
         </div>
-        <div className="w-[450px]">123123</div>
+        <div className="w-[450px]">
+          <CheckoutCard className="sticky top-4 p-6">
+            <div className="flex flex-col gap-1">
+              <span className="text-xl">Итого:</span>
+              <span className="text-4xl font-extrabold">3506 ₽</span>
+            </div>
+            <div className="flex my-4">
+              <span className="flex flex-1 text-lg text-neutral-500">
+                Стоимость товаров:
+                <div className="flex-1 border-b border-dashed border-b-neutral-200 relative -top-1 mx-2" />
+              </span>
+              <span className="font-bold text-lg">3000 ₽</span>
+            </div>
+          </CheckoutCard>
+        </div>
       </div>
     </Container>
   )

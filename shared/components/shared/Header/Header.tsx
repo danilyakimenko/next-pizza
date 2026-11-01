@@ -5,6 +5,7 @@ import { User } from "lucide-react"
 import Link from "next/link"
 import { CartButton } from "@/shared/components/shared"
 import { cn } from "cn"
+import React from "react"
 
 interface Props {
   className?: string
@@ -12,7 +13,11 @@ interface Props {
   hasCart?: boolean
 }
 
-export const Header = ({ className, hasSearch = true, hasCart = true }: Props) => {
+export const Header: React.FC<Props> = ({
+  className,
+  hasSearch = true,
+  hasCart = true,
+}) => {
   return (
     <header className={cn("border-b", className)}>
       <Container className="flex items-center justify-between py-8">
