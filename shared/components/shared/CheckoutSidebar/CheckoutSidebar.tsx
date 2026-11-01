@@ -1,13 +1,17 @@
 import { CheckoutCard, CheckoutItemDetails } from "@/shared/components/shared"
 import { ArrowRight, Package, Percent, Truck } from "lucide-react"
 import { Button } from "@/shared/components/ui"
-import { useCart } from "@/shared/hooks"
+import React from "react"
+import { CartStateItem } from "@/shared/lib"
 
 const VAT = 15
 
-export const CheckoutSidebar = () => {
-  const { totalAmount, items } = useCart()
+interface Props {
+  totalAmount: number
+  items: CartStateItem[]
+}
 
+export const CheckoutSidebar: React.FC<Props> = ({ totalAmount, items }) => {
   const vatPrice = (totalAmount * VAT) / 100
   const deliveryCost = items.length > 0 ? 250 : 0
   const totalPrice = totalAmount + vatPrice + deliveryCost

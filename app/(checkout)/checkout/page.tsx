@@ -6,17 +6,15 @@ import {
   Container,
   Title,
 } from "@/shared/components/shared"
-import {  Input, TextArea } from "@/shared/components/ui"
+import { Input, TextArea } from "@/shared/components/ui"
 
 import { useCart } from "@/shared/hooks"
 import { getCartItemDetails } from "@/shared/lib"
 import { PizzaSize, PizzaType } from "@/shared/constants/pizza"
-import { CheckoutSidebar } from "@/shared/components/shared/CheckoutSidebar"
-
-
+import { CheckoutSidebar } from "@/shared/components/shared"
 
 export default function CheckoutPage() {
-  const { updateItemQuantity, items, removeCartItem } = useCart()
+  const { totalAmount, updateItemQuantity, items, removeCartItem } = useCart()
 
   const onCountButtonClick = (
     id: number,
@@ -26,8 +24,6 @@ export default function CheckoutPage() {
     const newQuantity = type === "plus" ? quantity + 1 : quantity - 1
     updateItemQuantity(id, newQuantity)
   }
-
-
 
   return (
     <Container className="mt-10">
@@ -136,7 +132,7 @@ export default function CheckoutPage() {
           </CheckoutCard>
         </div>
         <div className="w-[450px]">
-          <CheckoutSidebar />
+          <CheckoutSidebar totalAmount={totalAmount} items={items} />
         </div>
       </div>
     </Container>
