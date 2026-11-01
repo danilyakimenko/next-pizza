@@ -13,6 +13,9 @@ import { useCart } from "@/shared/hooks"
 import { getCartItemDetails } from "@/shared/lib"
 import { PizzaSize, PizzaType } from "@/shared/constants/pizza"
 
+const VAT = 15
+const DELIVERY_COST = 250
+
 export default function CheckoutPage() {
   const { totalAmount, updateItemQuantity, items, removeCartItem } = useCart()
 
@@ -24,6 +27,9 @@ export default function CheckoutPage() {
     const newQuantity = type === "plus" ? quantity + 1 : quantity - 1
     updateItemQuantity(id, newQuantity)
   }
+
+  const vatPrice = totalAmount * VAT / 100
+  const totalPrice = totalAmount + vatPrice + DELIVERY_COST
 
   return (
     <Container className="mt-10">
@@ -135,25 +141,25 @@ export default function CheckoutPage() {
           <CheckoutCard className="sticky top-4 p-6">
             <div className="flex flex-col gap-1">
               <span className="text-xl">Итого:</span>
-              <span className="text-4xl font-extrabold">{totalAmount}</span>
+              <span className="text-4xl font-extrabold">{totalPrice}</span>
             </div>
             <CheckoutItemDetails
               title={
                 <div className="flex items-center">
                   <Package className="mr-2 text-gray-400" size={24} />
-                  Стоимость товара:
+                  Стоимость корзины:
                 </div>
               }
-              value="3000 ₽"
+              value={`${totalAmount} ₽`}
             />
             <CheckoutItemDetails
               title={
                 <div className="flex items-center">
                   <Percent className="mr-2 text-gray-400" size={24} />
-                  Налоги:
+                  Налог:
                 </div>
               }
-              value="3000 ₽"
+              value={`${vatPrice} ₽`}
             />
             <CheckoutItemDetails
               title={
@@ -162,7 +168,7 @@ export default function CheckoutPage() {
                   Доставка:
                 </div>
               }
-              value="3000 ₽"
+              value={`${DELIVERY_COST} ₽`}
             />
             <Button
               className="mt-6 h-14 w-full rounded-2xl text-base font-bold"
