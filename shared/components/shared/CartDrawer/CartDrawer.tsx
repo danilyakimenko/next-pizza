@@ -2,7 +2,8 @@
 
 import {
   Button,
-  Sheet, SheetClose,
+  Sheet,
+  SheetClose,
   SheetContent,
   SheetFooter,
   SheetHeader,
@@ -14,32 +15,13 @@ import Link from "next/link"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { CartDrawerItem, Title } from "@/shared/components/shared"
 import { getCartItemDetails } from "@/shared/lib"
-import { useCartStore } from "@/shared/store"
 import { PizzaSize, PizzaType } from "@/shared/constants/pizza"
-import { useShallow } from "zustand/react/shallow"
 import Image from "next/image"
 import { cn } from "cn"
+import { useCart } from "@/shared/hooks"
 
 export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const [
-    totalAmount,
-    fetchCartItems,
-    updateItemQuantity,
-    removeCartItem,
-    items,
-  ] = useCartStore(
-    useShallow((state) => [
-      state.totalAmount,
-      state.fetchCartItems,
-      state.updateItemQuantity,
-      state.removeCartItem,
-      state.items,
-    ])
-  )
-
-  React.useEffect(() => {
-    fetchCartItems()
-  }, [])
+  const { totalAmount, updateItemQuantity, items, removeCartItem } = useCart()
 
   const itemsCounter = items.length
   const getItemsWord = (count: number) => {
@@ -67,7 +49,12 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
     <Sheet>
       <SheetTrigger render={children as React.ReactElement} />
       <SheetContent className="flex w-[500px] flex-col justify-between bg-gray-100 pb-0">
-        <div className={cn('flex flex-col h-full', !totalAmount && 'justify-center')}>
+        <div
+          className={cn(
+            "flex h-full flex-col",
+            !totalAmount && "justify-center"
+          )}
+        >
           {totalAmount > 0 && (
             <SheetHeader>
               <SheetTitle>
@@ -122,15 +109,11 @@ export const CartDrawer: React.FC<React.PropsWithChildren> = ({ children }) => {
                     <CartDrawerItem
                       id={id}
                       imageUrl={imageUrl}
-                      details={
-                        pizzaSize && pizzaType
-                          ? getCartItemDetails(
-                              ingredients,
-                              pizzaType as PizzaType,
-                              pizzaSize as PizzaSize
-                            )
-                          : ""
-                      }
+                      details={getCartItemDetails(
+                        ingredients,
+                        pizzaType as PizzaType,
+                        pizzaSize as PizzaSize
+                      )}
                       disabled={disabled}
                       name={name}
                       price={price}

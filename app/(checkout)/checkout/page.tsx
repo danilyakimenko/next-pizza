@@ -1,13 +1,30 @@
+"use client"
+
 import {
-  CheckoutCard, CheckoutItem,
+  CheckoutCard,
+  CheckoutItem,
   CheckoutItemDetails,
   Container,
   Title,
 } from "@/shared/components/shared"
 import { Button, Input, TextArea } from "@/shared/components/ui"
 import { ArrowRight, Package, Percent, Truck } from "lucide-react"
+import { useCart } from "@/shared/hooks"
+import { getCartItemDetails } from "@/shared/lib"
+import { PizzaSize, PizzaType } from "@/shared/constants/pizza"
 
 export default function CheckoutPage() {
+  const { totalAmount, updateItemQuantity, items, removeCartItem } = useCart()
+
+  const onCountButtonClick = (
+    id: number,
+    quantity: number,
+    type: "plus" | "minus"
+  ) => {
+    const newQuantity = type === "plus" ? quantity + 1 : quantity - 1
+    updateItemQuantity(id, newQuantity)
+  }
+
   return (
     <Container className="mt-10">
       <Title
@@ -20,22 +37,40 @@ export default function CheckoutPage() {
         <div className="mb-20 flex flex-1 flex-col gap-10">
           <CheckoutCard title="1. Корзина">
             <div className="flex flex-col gap-5">
-              <CheckoutItem
-                id={1}
-                imageUrl="https://media.dodostatic.net/image/r:584x584/11EE7D61706D472F9A5D71EB94149304.webp"
-                details="Пицца"
-                name="Чоризо Фреш"
-                price={200}
-                quantity={1}
-              />
-              <CheckoutItem
-                id={1}
-                imageUrl="https://media.dodostatic.net/image/r:584x584/11EE7D61706D472F9A5D71EB94149304.webp"
-                details="Пицца"
-                name="Чоризо Фреш"
-                price={200}
-                quantity={1}
-              />
+              {items.map((item) => {
+                const {
+                  id,
+                  imageUrl,
+                  ingredients,
+                  pizzaType,
+                  pizzaSize,
+                  name,
+                  price,
+                  quantity,
+                  disabled,
+                } = item
+
+                return (
+                  <CheckoutItem
+                    id={id}
+                    imageUrl={imageUrl}
+                    details={getCartItemDetails(
+                      ingredients,
+                      pizzaType as PizzaType,
+                      pizzaSize as PizzaSize
+                    )}
+                    name={name}
+                    price={price}
+                    quantity={quantity}
+                    disabled={disabled}
+                    onClickCountButton={(type) =>
+                      onCountButtonClick(id, quantity, type)
+                    }
+                    onClickRemove={() => removeCartItem(id)}
+                    key={id}
+                  />
+                )
+              })}
             </div>
           </CheckoutCard>
 
@@ -100,7 +135,7 @@ export default function CheckoutPage() {
           <CheckoutCard className="sticky top-4 p-6">
             <div className="flex flex-col gap-1">
               <span className="text-xl">Итого:</span>
-              <span className="text-4xl font-extrabold">3506 ₽</span>
+              <span className="text-4xl font-extrabold">{totalAmount}</span>
             </div>
             <CheckoutItemDetails
               title={
