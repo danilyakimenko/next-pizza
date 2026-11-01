@@ -1,5 +1,5 @@
 import {
-  CheckoutCard,
+  CheckoutCard, CheckoutItem,
   CheckoutItemDetails,
   Container,
   Title,
@@ -18,7 +18,26 @@ export default function CheckoutPage() {
 
       <div className="flex gap-10">
         <div className="mb-20 flex flex-1 flex-col gap-10">
-          <CheckoutCard title="1. Корзина">123</CheckoutCard>
+          <CheckoutCard title="1. Корзина">
+            <div className="flex flex-col gap-5">
+              <CheckoutItem
+                id={1}
+                imageUrl="https://media.dodostatic.net/image/r:584x584/11EE7D61706D472F9A5D71EB94149304.webp"
+                details="Пицца"
+                name="Чоризо Фреш"
+                price={200}
+                quantity={1}
+              />
+              <CheckoutItem
+                id={1}
+                imageUrl="https://media.dodostatic.net/image/r:584x584/11EE7D61706D472F9A5D71EB94149304.webp"
+                details="Пицца"
+                name="Чоризо Фреш"
+                price={200}
+                quantity={1}
+              />
+            </div>
+          </CheckoutCard>
 
           <CheckoutCard title="2. Персональные данные">
             <div className="grid grid-cols-2 gap-5">
