@@ -3,21 +3,20 @@
 import {
   CheckoutCard,
   CheckoutItem,
-  CheckoutItemDetails,
   Container,
   Title,
 } from "@/shared/components/shared"
-import { Button, Input, TextArea } from "@/shared/components/ui"
-import { ArrowRight, Package, Percent, Truck } from "lucide-react"
+import {  Input, TextArea } from "@/shared/components/ui"
+
 import { useCart } from "@/shared/hooks"
 import { getCartItemDetails } from "@/shared/lib"
 import { PizzaSize, PizzaType } from "@/shared/constants/pizza"
+import { CheckoutSidebar } from "@/shared/components/shared/CheckoutSidebar"
 
-const VAT = 15
-const DELIVERY_COST = 250
+
 
 export default function CheckoutPage() {
-  const { totalAmount, updateItemQuantity, items, removeCartItem } = useCart()
+  const { updateItemQuantity, items, removeCartItem } = useCart()
 
   const onCountButtonClick = (
     id: number,
@@ -28,8 +27,7 @@ export default function CheckoutPage() {
     updateItemQuantity(id, newQuantity)
   }
 
-  const vatPrice = totalAmount * VAT / 100
-  const totalPrice = totalAmount + vatPrice + DELIVERY_COST
+
 
   return (
     <Container className="mt-10">
@@ -138,46 +136,7 @@ export default function CheckoutPage() {
           </CheckoutCard>
         </div>
         <div className="w-[450px]">
-          <CheckoutCard className="sticky top-4 p-6">
-            <div className="flex flex-col gap-1">
-              <span className="text-xl">Итого:</span>
-              <span className="text-4xl font-extrabold">{totalPrice}</span>
-            </div>
-            <CheckoutItemDetails
-              title={
-                <div className="flex items-center">
-                  <Package className="mr-2 text-gray-400" size={24} />
-                  Стоимость корзины:
-                </div>
-              }
-              value={`${totalAmount} ₽`}
-            />
-            <CheckoutItemDetails
-              title={
-                <div className="flex items-center">
-                  <Percent className="mr-2 text-gray-400" size={24} />
-                  Налог:
-                </div>
-              }
-              value={`${vatPrice} ₽`}
-            />
-            <CheckoutItemDetails
-              title={
-                <div className="flex items-center">
-                  <Truck className="mr-2 text-gray-400" size={24} />
-                  Доставка:
-                </div>
-              }
-              value={`${DELIVERY_COST} ₽`}
-            />
-            <Button
-              className="mt-6 h-14 w-full rounded-2xl text-base font-bold"
-              type="submit"
-            >
-              Перейти к оплате
-              <ArrowRight className="ml-2" size="20" />
-            </Button>
-          </CheckoutCard>
+          <CheckoutSidebar />
         </div>
       </div>
     </Container>
