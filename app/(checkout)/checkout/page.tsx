@@ -1,5 +1,11 @@
-import { CheckoutCard, Container, Title } from "@/shared/components/shared"
-import { Input, TextArea } from "@/shared/components/ui"
+import {
+  CheckoutCard,
+  CheckoutItemDetails,
+  Container,
+  Title,
+} from "@/shared/components/shared"
+import { Button, Input, TextArea } from "@/shared/components/ui"
+import { ArrowRight, Package, Percent, Truck } from "lucide-react"
 
 export default function CheckoutPage() {
   return (
@@ -77,13 +83,40 @@ export default function CheckoutPage() {
               <span className="text-xl">Итого:</span>
               <span className="text-4xl font-extrabold">3506 ₽</span>
             </div>
-            <div className="flex my-4">
-              <span className="flex flex-1 text-lg text-neutral-500">
-                Стоимость товаров:
-                <div className="flex-1 border-b border-dashed border-b-neutral-200 relative -top-1 mx-2" />
-              </span>
-              <span className="font-bold text-lg">3000 ₽</span>
-            </div>
+            <CheckoutItemDetails
+              title={
+                <div className="flex items-center">
+                  <Package className="mr-2 text-gray-400" size={24} />
+                  Стоимость товара:
+                </div>
+              }
+              value="3000 ₽"
+            />
+            <CheckoutItemDetails
+              title={
+                <div className="flex items-center">
+                  <Percent className="mr-2 text-gray-400" size={24} />
+                  Налоги:
+                </div>
+              }
+              value="3000 ₽"
+            />
+            <CheckoutItemDetails
+              title={
+                <div className="flex items-center">
+                  <Truck className="mr-2 text-gray-400" size={24} />
+                  Доставка:
+                </div>
+              }
+              value="3000 ₽"
+            />
+            <Button
+              className="mt-6 h-14 w-full rounded-2xl text-base font-bold"
+              type="submit"
+            >
+              Перейти к оплате
+              <ArrowRight className="ml-2" size="20" />
+            </Button>
           </CheckoutCard>
         </div>
       </div>
