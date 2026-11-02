@@ -12,6 +12,7 @@ import { useCart } from "@/shared/hooks"
 import { getCartItemDetails } from "@/shared/lib"
 import { PizzaSize, PizzaType } from "@/shared/constants/pizza"
 import { CheckoutSidebar } from "@/shared/components/shared"
+import { FormInput } from "@/shared/components/shared"
 
 export default function CheckoutPage() {
   const { totalAmount, updateItemQuantity, items, removeCartItem } = useCart()
@@ -100,14 +101,7 @@ export default function CheckoutPage() {
                   placeholder="example@example.com"
                 />
               </label>
-              <label className="grid gap-1">
-                Телефон
-                <Input
-                  className="text-base"
-                  name="phone"
-                  placeholder="+7(999)-999-99-99"
-                />
-              </label>
+              <FormInput label="Телефон" name="phone" placeholder="+7(999)-999-99-99" />
             </div>
           </CheckoutCard>
           <CheckoutCard title="3. Адрес доставки">

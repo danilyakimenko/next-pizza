@@ -1,8 +1,8 @@
 import { Input } from "@/shared/components/ui"
 import React from "react"
-import { ErrorSymbol } from "@/shared/components/shared"
+import { ClearButton, ErrorSymbol, ErrorText } from "@/shared/components/shared"
 
-interface Props {
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string
   label?: string
   required?: boolean
@@ -21,9 +21,11 @@ export const FormInput: React.FC<Props> = ({ className, name, label, required, .
       )}
       <div className="relative">
         <Input className="h-12 text-md" {...props} />
+
+        <ClearButton />
       </div>
 
-
+      <ErrorText className="mt-2" text="Поле обязательно для заполнения" />
     </div>
   )
 }
