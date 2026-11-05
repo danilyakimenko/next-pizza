@@ -3,15 +3,14 @@
 import { useForm, type SubmitHandler } from "react-hook-form"
 import {
   CheckoutCard,
-  CheckoutItem,
+  CheckoutCart,
   Container,
   Title,
 } from "@/shared/components/shared"
 import { Input, TextArea } from "@/shared/components/ui"
 
 import { useCart } from "@/shared/hooks"
-import { getCartItemDetails } from "@/shared/lib"
-import { PizzaSize, PizzaType } from "@/shared/constants/pizza"
+
 import { CheckoutSidebar } from "@/shared/components/shared"
 import { FormInput } from "@/shared/components/shared"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -22,13 +21,13 @@ export default function CheckoutPage() {
   const form = useForm({
     resolver: zodResolver(),
     defaultValues: {
-      email: '',
-      firstName: '',
-      lastName: '',
-      phone: '',
-      address: '',
-      comment: '',
-    }
+      email: "",
+      firstName: "",
+      lastName: "",
+      phone: "",
+      address: "",
+      comment: "",
+    },
   })
 
   const onCountButtonClick = (
@@ -50,44 +49,11 @@ export default function CheckoutPage() {
 
       <div className="flex gap-10">
         <div className="mb-20 flex flex-1 flex-col gap-10">
-          <CheckoutCard title="1. Корзина">
-            <div className="flex flex-col gap-5">
-              {items.map((item) => {
-                const {
-                  id,
-                  imageUrl,
-                  ingredients,
-                  pizzaType,
-                  pizzaSize,
-                  name,
-                  price,
-                  quantity,
-                  disabled,
-                } = item
-
-                return (
-                  <CheckoutItem
-                    id={id}
-                    imageUrl={imageUrl}
-                    details={getCartItemDetails(
-                      ingredients,
-                      pizzaType as PizzaType,
-                      pizzaSize as PizzaSize
-                    )}
-                    name={name}
-                    price={price}
-                    quantity={quantity}
-                    disabled={disabled}
-                    onClickCountButton={(type) =>
-                      onCountButtonClick(id, quantity, type)
-                    }
-                    onClickRemove={() => removeCartItem(id)}
-                    key={id}
-                  />
-                )
-              })}
-            </div>
-          </CheckoutCard>
+          <CheckoutCart
+            onCountButtonClick={onCountButtonClick}
+            items={items}
+            removeCartItem={removeCartItem}
+          />
 
           <CheckoutCard title="2. Персональные данные">
             <div className="grid grid-cols-2 gap-5">
@@ -115,7 +81,11 @@ export default function CheckoutPage() {
                   placeholder="example@example.com"
                 />
               </label>
-              <FormInput label="Телефон" name="phone" placeholder="+7(999)-999-99-99" />
+              <FormInput
+                label="Телефон"
+                name="phone"
+                placeholder="+7(999)-999-99-99"
+              />
             </div>
           </CheckoutCard>
           <CheckoutCard title="3. Адрес доставки">
