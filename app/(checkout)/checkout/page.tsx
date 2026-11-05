@@ -1,5 +1,6 @@
 "use client"
 
+import { useForm, type SubmitHandler } from "react-hook-form"
 import {
   CheckoutCard,
   CheckoutItem,
@@ -13,9 +14,22 @@ import { getCartItemDetails } from "@/shared/lib"
 import { PizzaSize, PizzaType } from "@/shared/constants/pizza"
 import { CheckoutSidebar } from "@/shared/components/shared"
 import { FormInput } from "@/shared/components/shared"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 export default function CheckoutPage() {
   const { totalAmount, updateItemQuantity, items, removeCartItem } = useCart()
+
+  const form = useForm({
+    resolver: zodResolver(),
+    defaultValues: {
+      email: '',
+      firstName: '',
+      lastName: '',
+      phone: '',
+      address: '',
+      comment: '',
+    }
+  })
 
   const onCountButtonClick = (
     id: number,
