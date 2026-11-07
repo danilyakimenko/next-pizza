@@ -3,7 +3,7 @@
 import { FormProvider, useForm } from "react-hook-form"
 import {
   CheckoutCart,
-  CheckoutFormValues,
+  type CheckoutFormValues,
   Container,
   Title,
   checkoutFormSchema,
@@ -29,9 +29,7 @@ export default function CheckoutPage() {
     },
   })
 
-  const onSubmit = (data: CheckoutFormValues) => {
-
-  }
+  const onSubmit = (data: CheckoutFormValues) => {}
 
   const onCountButtonClick = (
     id: number,

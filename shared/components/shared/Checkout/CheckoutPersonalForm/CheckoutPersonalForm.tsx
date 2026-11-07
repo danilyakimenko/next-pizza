@@ -1,4 +1,3 @@
-import { Input } from "@/shared/components/ui"
 import { CheckoutCard, FormInput } from "@/shared/components/shared"
 
 export const CheckoutPersonalForm = () => {
