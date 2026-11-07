@@ -59,8 +59,8 @@ export default function CheckoutPage() {
                 items={items}
                 removeCartItem={removeCartItem}
               />
-              <CheckoutPersonalForm />
-              <CheckoutAddressForm />
+              <CheckoutPersonalForm loading={loading} />
+              <CheckoutAddressForm loading={loading} />
             </div>
             <div className="w-[450px]">
               <CheckoutSidebar totalAmount={totalAmount} items={items} loading={loading} />

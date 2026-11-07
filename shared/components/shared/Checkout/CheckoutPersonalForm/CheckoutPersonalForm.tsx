@@ -1,6 +1,16 @@
 import { CheckoutCard, FormInput } from "@/shared/components/shared"
+import React from "react"
+import { Skeleton } from "@/shared/components/ui"
 
-export const CheckoutPersonalForm = () => {
+interface Props {
+  loading?: boolean
+}
+
+export const CheckoutPersonalForm = ({ loading }: Props) => {
+  if (loading) {
+    return <Skeleton className="h-[286px] w-full bg-gray-200" />
+  }
+
   return (
     <CheckoutCard title="2. Персональные данные">
       <div className="grid grid-cols-2 gap-5">
