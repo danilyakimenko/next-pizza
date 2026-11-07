@@ -15,7 +15,7 @@ import { useCart } from "@/shared/hooks"
 import { zodResolver } from "@hookform/resolvers/zod"
 
 export default function CheckoutPage() {
-  const { totalAmount, updateItemQuantity, items, removeCartItem } = useCart()
+  const { totalAmount, updateItemQuantity, items, removeCartItem, loading } = useCart()
 
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutFormSchema),
@@ -29,7 +29,9 @@ export default function CheckoutPage() {
     },
   })
 
-  const onSubmit = (data: CheckoutFormValues) => {}
+  const onSubmit = (data: CheckoutFormValues) => {
+    console.log(data)
+  }
 
   const onCountButtonClick = (
     id: number,
@@ -61,7 +63,7 @@ export default function CheckoutPage() {
               <CheckoutAddressForm />
             </div>
             <div className="w-[450px]">
-              <CheckoutSidebar totalAmount={totalAmount} items={items} />
+              <CheckoutSidebar totalAmount={totalAmount} items={items} loading={loading} />
             </div>
           </div>
         </form>

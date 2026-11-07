@@ -2,7 +2,7 @@ import React from "react"
 
 interface Props {
   title?: React.ReactNode
-  value?: string
+  value?: React.ReactNode
 }
 
 export const CheckoutItemDetails: React.FC<Props> = ({ title, value }) => {
