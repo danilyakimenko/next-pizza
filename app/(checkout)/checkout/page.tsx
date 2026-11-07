@@ -1,20 +1,24 @@
 "use client"
 
-import { useForm, type SubmitHandler } from "react-hook-form"
-import { CheckoutCart, Container, Title } from "@/shared/components/shared"
-import { useCart } from "@/shared/hooks"
-import { CheckoutSidebar } from "@/shared/components/shared"
-import { zodResolver } from "@hookform/resolvers/zod"
+import { FormProvider, useForm } from "react-hook-form"
 import {
+  CheckoutCart,
+  CheckoutFormValues,
+  Container,
+  Title,
+  checkoutFormSchema,
   CheckoutAddressForm,
   CheckoutPersonalForm,
+  CheckoutSidebar,
 } from "@/shared/components/shared"
+import { useCart } from "@/shared/hooks"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 export default function CheckoutPage() {
   const { totalAmount, updateItemQuantity, items, removeCartItem } = useCart()
 
-  const form = useForm({
-    resolver: zodResolver(),
+  const form = useForm<CheckoutFormValues>({
+    resolver: zodResolver(checkoutFormSchema),
     defaultValues: {
       email: "",
       firstName: "",
@@ -24,6 +28,10 @@ export default function CheckoutPage() {
       comment: "",
     },
   })
+
+  const onSubmit = (data: CheckoutFormValues) => {
+
+  }
 
   const onCountButtonClick = (
     id: number,
@@ -42,20 +50,24 @@ export default function CheckoutPage() {
         text="Оформление заказа"
       />
 
-      <div className="flex gap-10">
-        <div className="mb-20 flex flex-1 flex-col gap-10">
-          <CheckoutCart
-            onCountButtonClick={onCountButtonClick}
-            items={items}
-            removeCartItem={removeCartItem}
-          />
-          <CheckoutPersonalForm />
-          <CheckoutAddressForm />
-        </div>
-        <div className="w-[450px]">
-          <CheckoutSidebar totalAmount={totalAmount} items={items} />
-        </div>
-      </div>
+      <FormProvider {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="flex gap-10">
+            <div className="mb-20 flex flex-1 flex-col gap-10">
+              <CheckoutCart
+                onCountButtonClick={onCountButtonClick}
+                items={items}
+                removeCartItem={removeCartItem}
+              />
+              <CheckoutPersonalForm />
+              <CheckoutAddressForm />
+            </div>
+            <div className="w-[450px]">
+              <CheckoutSidebar totalAmount={totalAmount} items={items} />
+            </div>
+          </div>
+        </form>
+      </FormProvider>
     </Container>
   )
 }
