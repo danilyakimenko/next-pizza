@@ -6,9 +6,18 @@ import {
   CheckoutCard, ErrorText,
 } from "@/shared/components/shared"
 import { Controller, useFormContext } from "react-hook-form"
+import { Skeleton } from "@/shared/components/ui"
 
-export const CheckoutAddressForm = () => {
+interface Props {
+  loading?: boolean
+}
+
+export const CheckoutAddressForm = ({ loading }: Props ) => {
   const { control } = useFormContext()
+
+  if (loading) {
+    return <Skeleton className="w-full h-[302px] bg-gray-200 rounded-3xl" />
+  }
 
   return (
     <CheckoutCard title="3. Адрес доставки">
