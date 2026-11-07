@@ -58,6 +58,7 @@ export default function CheckoutPage() {
                 onCountButtonClick={onCountButtonClick}
                 items={items}
                 removeCartItem={removeCartItem}
+                loading={loading}
               />
               <CheckoutPersonalForm loading={loading} />
               <CheckoutAddressForm loading={loading} />

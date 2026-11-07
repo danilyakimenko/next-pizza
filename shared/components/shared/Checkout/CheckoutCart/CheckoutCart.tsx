@@ -1,7 +1,10 @@
-import { CheckoutCard, CheckoutItem } from "@/shared/components/shared"
+import {
+  CheckoutCard,
+  CheckoutItem,
+  CheckoutItemSkeleton,
+} from "@/shared/components/shared"
 import { CartStateItem, getCartItemDetails } from "@/shared/lib"
 import { PizzaSize, PizzaType } from "@/shared/constants/pizza"
-import React from "react"
 
 interface Props {
   onCountButtonClick: (
@@ -11,9 +14,19 @@ interface Props {
   ) => void
   items: CartStateItem[]
   removeCartItem: (id: number) => void
+  loading?: boolean
 }
 
-export const CheckoutCart: React.FC<Props> = ({ items, onCountButtonClick, removeCartItem }) => {
+export const CheckoutCart = ({
+  items,
+  onCountButtonClick,
+  removeCartItem,
+  loading,
+}: Props) => {
+  if (loading) {
+    return [...Array(4)].map((_, index) => <CheckoutItemSkeleton key={index} />)
+  }
+
   return (
     <CheckoutCard title="1. Корзина">
       <div className="flex flex-col gap-5">
