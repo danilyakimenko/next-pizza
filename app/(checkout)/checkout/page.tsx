@@ -1,17 +1,14 @@
 "use client"
 
 import { useForm, type SubmitHandler } from "react-hook-form"
-import {
-  CheckoutCard,
-  CheckoutCart,
-  Container,
-  Title,
-} from "@/shared/components/shared"
-import { Input, TextArea } from "@/shared/components/ui"
+import { CheckoutCart, Container, Title } from "@/shared/components/shared"
 import { useCart } from "@/shared/hooks"
 import { CheckoutSidebar } from "@/shared/components/shared"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { CheckoutPersonalForm } from "@/shared/components/shared/Checkout"
+import {
+  CheckoutAddressForm,
+  CheckoutPersonalForm,
+} from "@/shared/components/shared"
 
 export default function CheckoutPage() {
   const { totalAmount, updateItemQuantity, items, removeCartItem } = useCart()
@@ -53,26 +50,7 @@ export default function CheckoutPage() {
             removeCartItem={removeCartItem}
           />
           <CheckoutPersonalForm />
-          <CheckoutCard title="3. Адрес доставки">
-            <div className="flex flex-col gap-5">
-              <label className="grid gap-1">
-                Адрес
-                <Input
-                  className="text-base"
-                  name="address"
-                  placeholder="Введите адрес доставки"
-                />
-              </label>
-              <label>
-                Комментарий к заказу
-                <TextArea
-                  className="text-base"
-                  rows={5}
-                  placeholder="Позвоните перед доставкой, домофон не работает..."
-                />
-              </label>
-            </div>
-          </CheckoutCard>
+          <CheckoutAddressForm />
         </div>
         <div className="w-[450px]">
           <CheckoutSidebar totalAmount={totalAmount} items={items} />
