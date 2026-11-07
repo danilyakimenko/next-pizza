@@ -8,12 +8,10 @@ import {
   Title,
 } from "@/shared/components/shared"
 import { Input, TextArea } from "@/shared/components/ui"
-
 import { useCart } from "@/shared/hooks"
-
 import { CheckoutSidebar } from "@/shared/components/shared"
-import { FormInput } from "@/shared/components/shared"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { CheckoutPersonalForm } from "@/shared/components/shared/Checkout"
 
 export default function CheckoutPage() {
   const { totalAmount, updateItemQuantity, items, removeCartItem } = useCart()
@@ -54,40 +52,7 @@ export default function CheckoutPage() {
             items={items}
             removeCartItem={removeCartItem}
           />
-
-          <CheckoutCard title="2. Персональные данные">
-            <div className="grid grid-cols-2 gap-5">
-              <label className="grid gap-1">
-                Имя
-                <Input
-                  className="text-base"
-                  name="firstName"
-                  placeholder="Иван"
-                />
-              </label>
-              <label className="grid gap-1">
-                Фамилия
-                <Input
-                  className="text-base"
-                  name="lastName"
-                  placeholder="Иванов"
-                />
-              </label>
-              <label className="grid gap-1">
-                E-mail
-                <Input
-                  className="text-base"
-                  name="email"
-                  placeholder="example@example.com"
-                />
-              </label>
-              <FormInput
-                label="Телефон"
-                name="phone"
-                placeholder="+7(999)-999-99-99"
-              />
-            </div>
-          </CheckoutCard>
+          <CheckoutPersonalForm />
           <CheckoutCard title="3. Адрес доставки">
             <div className="flex flex-col gap-5">
               <label className="grid gap-1">
