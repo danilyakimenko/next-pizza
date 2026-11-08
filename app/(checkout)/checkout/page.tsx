@@ -37,7 +37,10 @@ export default function CheckoutPage() {
     try {
       setSubmitting(true)
       const url = await createOrder(data)
-      toast.success('Заказ успешно оформлен! Переход на страницу оплаты...', {
+      toast.success('Заказ успешно оформлен! Отправили детали заказа вам на почту📨', {
+        icon: '✅'
+      })
+      toast.success('Переход на страницу оплаты...', {
         icon: '✅'
       })
       if (url) {
