@@ -1,19 +1,95 @@
 "use server"
 
-import { CheckoutFormValues } from "@/shared/components/shared"
+import {
+  CheckoutFormValues,
+  PayOrderTemplate,
+} from "@/shared/components/shared"
 import { prisma } from "@/prisma/prisma-client"
 import { OrderStatus } from "@prisma/client"
 import { cookies } from "next/headers"
+import { sendEmail } from "@/shared/lib/sendEmail"
 
 export async function createOrder(data: CheckoutFormValues) {
   try {
-    const cookieStore = cookies()
-    const cartToken = cookieStore.get('cartToken')?.value
+    const { firstName, lastName, email, phone, address, comment } = data
+    const cookieStore = await cookies()
+    const cartToken = cookieStore.get("cartToken")?.value
 
     if (!cartToken) {
-      throw new Error('Cart token not found')
+      throw new Error("Cart token not found")
     }
+
+    const userCart = await prisma.cart.findFirst({
+      include: {
+        user: true,
+        items: {
+          include: {
+            ingredients: true,
+            productItem: {
+              include: {
+                product: true,
+              },
+            },
+          },
+        },
+      },
+      where: {
+        token: cartToken,
+      },
+    })
+
+    if (!userCart) {
+      throw new Error("Cart not found")
+    }
+
+    if (userCart?.totalAmount === 0) {
+      throw new Error("Cart is empty")
+    }
+
+    const order = await prisma.order.create({
+      data: {
+        token: cartToken,
+        fullName: `${firstName} ${lastName}`,
+        email,
+        phone,
+        address,
+        comment,
+        totalAmount: userCart.totalAmount,
+        status: OrderStatus.PENDING,
+        items: JSON.stringify(userCart.items),
+      },
+    })
+
+    const { id, totalAmount } = order
+
+    await prisma.cart.update({
+      where: {
+        id: userCart.id,
+      },
+      data: {
+        totalAmount: 0,
+      },
+    })
+
+    await prisma.cartItem.deleteMany({
+      where: {
+        cartId: userCart.id,
+      },
+    })
+
+    await sendEmail(
+      email,
+      `Next Pizza | Оплатите заказ №${id}`,
+      PayOrderTemplate({
+        orderId: id,
+        totalAmount,
+        paymentUrl: "https://github.com/danilyakimenko",
+      })
+    )
+
+    return "https://github.com/danilyakimenko"
   } catch (error) {
-    console.error(error)
+    console.error("[CreateOrder] Server error:", error)
+    throw error
   }
 }
