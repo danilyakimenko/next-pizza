@@ -8,6 +8,7 @@ import { prisma } from "@/prisma/prisma-client"
 import { OrderStatus } from "@prisma/client"
 import { cookies } from "next/headers"
 import { sendEmail } from "@/shared/lib/sendEmail"
+import { createPayment } from "@/shared/lib"
 
 export async function createOrder(data: CheckoutFormValues) {
   try {
@@ -75,6 +76,25 @@ export async function createOrder(data: CheckoutFormValues) {
       where: {
         cartId: userCart.id,
       },
+    })
+
+    const paymentData = await createPayment({
+      amount: totalAmount,
+      orderId: id,
+      description: `Оплата заказа №${id}`,
+    })
+
+    if (!paymentData) {
+      throw new Error('Payment data not found')
+    }
+
+    await prisma.order.update({
+       where: {
+         id,
+       },
+      data: {
+         paymentId: paymentData.id
+      }
     })
 
     await sendEmail(
