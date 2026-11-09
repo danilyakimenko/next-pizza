@@ -3,6 +3,7 @@ import { Nunito } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "react-hot-toast"
 import type { Metadata } from "next"
+import { Providers } from "@/shared/components/shared/Providers"
 
 const nunito = Nunito({
   subsets: ["cyrillic"],
@@ -21,12 +22,10 @@ export default function GlobalLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html
-      lang="ru"
-      suppressHydrationWarning
-      className={nunito.className}
-    >
-      <body>{children}<Toaster /></body>
+    <html lang="ru" suppressHydrationWarning className={nunito.className}>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   )
 }
