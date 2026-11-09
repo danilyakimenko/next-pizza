@@ -10,6 +10,7 @@ import { cn } from "cn"
 import React, { useEffect } from "react"
 import { useSearchParams } from "next/navigation"
 import toast from "react-hot-toast"
+import { signIn, useSession } from "next-auth/react"
 
 interface Props {
   className?: string
@@ -22,8 +23,10 @@ export const Header: React.FC<Props> = ({
   hasSearch = true,
   hasCart = true,
 }) => {
+  const { data: session } = useSession()
   const searchParams = useSearchParams()
 
+  console.log(session)
   useEffect(() => {
     if (searchParams.has('paid')) {
       setTimeout(() => {
@@ -52,7 +55,10 @@ export const Header: React.FC<Props> = ({
         )}
 
         <div className="flex items-center gap-3">
-          <Button className="flex items-center gap-1" variant="outline">
+          <Button className="flex items-center gap-1" variant="outline" onClick={() => signIn('github', {
+            callbackUrl: '/',
+            redirect: true,
+          })}>
             <User size={16} />
             Войти
           </Button>

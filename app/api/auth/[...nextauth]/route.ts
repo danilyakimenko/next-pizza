@@ -1,5 +1,5 @@
 import NextAuth from "next-auth"
-import GitHubProvider from "next-auth/providers/github";
+import GitHubProvider from "next-auth/providers/github"
 
 export const authOptions = {
   providers: [
@@ -10,4 +10,6 @@ export const authOptions = {
   ],
 }
 
-export default NextAuth(authOptions)
+const handler = NextAuth(authOptions)
+
+export { handler as GET, handler as POST }
