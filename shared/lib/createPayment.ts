@@ -27,10 +27,11 @@ export const createPayment = async ({ amount, description, orderId }: Props) => 
     },
     {
       auth: {
-        username: process.env.YOOKASSA_API_KEY as string,
-        password: "",
+        username: process.env.YOOKASSA_STORE_ID as string,
+        password: process.env.YOOKASSA_API_KEY as string,
       },
       headers: {
+        "Content-Type": "application/json",
         "Idempotence-Key": Math.random().toString(36).substring(7),
       },
     }

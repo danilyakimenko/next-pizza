@@ -97,17 +97,19 @@ export async function createOrder(data: CheckoutFormValues) {
       }
     })
 
+    const paymentUrl = paymentData.confirmation.confirmation_url
+
     await sendEmail(
       email,
       `Next Pizza | Оплатите заказ №${id}`,
       PayOrderTemplate({
         orderId: id,
         totalAmount,
-        paymentUrl: "https://github.com/danilyakimenko",
+        paymentUrl,
       })
     )
 
-    return "https://github.com/danilyakimenko"
+    return paymentUrl
   } catch (error) {
     console.error("[CreateOrder] Server error:", error)
     throw error
