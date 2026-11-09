@@ -1,5 +1,7 @@
 import type { NextConfig } from "next"
 
-const nextConfig: NextConfig = {}
+const nextConfig: NextConfig = {
+    allowedDevOrigins: ['smooth-buttons-fail.loca.lt'],
+}
 
 export default nextConfig
