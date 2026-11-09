@@ -13,7 +13,6 @@ export { ProductsGroupList } from "./ProductsGroupList"
 export { SearchInput } from "./SearchInput"
 export { PizzaImage } from "./PizzaImage"
 export { GroupVariants, type Variant } from "./GroupVariants"
-export * from "./Modals"
 export { ChooseProductForm } from "./ChooseProductForm"
 export { ChoosePizzaForm } from "./ChoosePizzaForm"
 export { IngredientItem } from './IngredientItem'
@@ -28,10 +27,13 @@ export { CheckoutItemDetails } from './CheckoutItemDetails'
 export { CheckoutItem } from './CheckoutItem'
 export { CheckoutItemSkeleton } from './CheckoutItemSkeleton'
 export { CheckoutSidebar } from './CheckoutSidebar'
-export * from './FormComponents'
 export { ErrorSymbol } from './ErrorSymbol'
 export { ErrorText } from './ErrorText'
 export { ClearButton } from './ClearButton'
-export * from './Checkout'
 export { AddressInput } from './AddressInput'
+export { ProfileButton } from "./ProfileButton"
+
+export * from './FormComponents'
+export * from './Checkout'
 export * from './EmailTemplates'
+export * from "./Modals"

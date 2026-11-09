@@ -1,16 +1,17 @@
 "use client"
 
-import { Container, SearchInput } from "@/shared/components/shared"
+import {
+  Container,
+  SearchInput,
+  ProfileButton,
+  CartButton,
+} from "@/shared/components/shared"
 import Image from "next/image"
-import { Button } from "@/shared/components/ui"
-import { User } from "lucide-react"
 import Link from "next/link"
-import { CartButton } from "@/shared/components/shared"
 import { cn } from "cn"
 import React, { useEffect } from "react"
 import { useSearchParams } from "next/navigation"
 import toast from "react-hot-toast"
-import { signIn, useSession } from "next-auth/react"
 
 interface Props {
   className?: string
@@ -23,12 +24,10 @@ export const Header: React.FC<Props> = ({
   hasSearch = true,
   hasCart = true,
 }) => {
-  const { data: session } = useSession()
   const searchParams = useSearchParams()
 
-  console.log(session)
   useEffect(() => {
-    if (searchParams.has('paid')) {
+    if (searchParams.has("paid")) {
       setTimeout(() => {
         toast.success("Заказ успешно оплачен! Информация отправлена на почту.")
       }, 300)
@@ -55,13 +54,7 @@ export const Header: React.FC<Props> = ({
         )}
 
         <div className="flex items-center gap-3">
-          <Button className="flex items-center gap-1" variant="outline" onClick={() => signIn('github', {
-            callbackUrl: '/',
-            redirect: true,
-          })}>
-            <User size={16} />
-            Войти
-          </Button>
+          <ProfileButton />
 
           {hasCart && <CartButton />}
         </div>
