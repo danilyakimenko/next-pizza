@@ -1,7 +1,8 @@
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
-    allowedDevOrigins: ['smooth-buttons-fail.loca.lt'],
+  reactStrictMode: false,
+  allowedDevOrigins: ["smooth-buttons-fail.loca.lt"],
 }
 
 export default nextConfig

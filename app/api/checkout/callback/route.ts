@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
         status: isSucceeded ? OrderStatus.SUCCEEDED : OrderStatus.CANCELLED,
       },
     })
-    const items = order?.items as unknown as CartItemDTO[]
+    const items = JSON.parse(order?.items as string) as CartItemDTO[]
 
     if (isSucceeded) {
       await sendEmail(
