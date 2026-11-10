@@ -1,2 +1,2 @@
 export { ChooseProductModal } from './ChooseProductModal'
-export { AuthModal } from './AuthModal'
+export { AuthModal, RegisterForm, LoginForm } from './AuthModal'

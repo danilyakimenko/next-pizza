@@ -13,7 +13,7 @@ export const AuthModal = ({ open, onClose }: Props) => {
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="w-[450px bg-white p-10">
+      <DialogContent className="w-[450px] bg-white p-10">
         FORM
         <hr />
         <div className="flex gap-2">
