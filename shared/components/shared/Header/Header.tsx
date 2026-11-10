@@ -4,7 +4,7 @@ import {
   Container,
   SearchInput,
   ProfileButton,
-  CartButton,
+  CartButton, AuthModal,
 } from "@/shared/components/shared"
 import Image from "next/image"
 import Link from "next/link"
@@ -54,6 +54,7 @@ export const Header: React.FC<Props> = ({
         )}
 
         <div className="flex items-center gap-3">
+          <AuthModal open={} onClose={} />
           <ProfileButton />
 
           {hasCart && <CartButton />}
