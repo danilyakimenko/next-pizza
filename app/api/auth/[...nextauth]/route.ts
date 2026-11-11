@@ -33,7 +33,10 @@ export const authOptions = {
           return null
         }
 
-        const isPasswordValid = await compare(credentials.password, findUser.password)
+        const isPasswordValid = await compare(
+          credentials.password,
+          findUser.password
+        )
 
         if (!isPasswordValid) {
           return null
@@ -47,11 +50,41 @@ export const authOptions = {
           id: String(findUser.id),
           email: findUser.email,
           name: findUser.fullName,
-          role: findUser.role
+          role: findUser.role,
         }
-      }
+      },
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt",
+  },
+  callbacks: {
+    async jwt({ token }) {
+      const findUser = await prisma.user.findFirst({
+        where: {
+          email: token.email,
+        },
+      })
+
+      if (findUser) {
+        token.id = String(findUser.id)
+        token.email = String(findUser.email)
+        token.fullName = String(findUser.fullName)
+        token.role = String(findUser.role)
+      }
+
+      return token
+    },
+    session({ session, token }) {
+      if (session?.user) {
+        session.user.id = token.id
+        session.user.role = token.role
+      }
+
+      return session
+    },
+  },
 }
 
 const handler = NextAuth(authOptions)
