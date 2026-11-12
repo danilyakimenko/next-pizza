@@ -7,7 +7,7 @@ import {
 import { prisma } from "@/prisma/prisma-client"
 import { OrderStatus } from "@prisma/client"
 import { cookies } from "next/headers"
-import { sendEmail } from "@/shared/lib/sendEmail"
+import { sendEmail } from "@/shared/lib/server"
 import { createPayment } from "@/shared/lib"
 
 export async function createOrder(data: CheckoutFormValues) {

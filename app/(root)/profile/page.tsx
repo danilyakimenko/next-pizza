@@ -1,0 +1,12 @@
+import { getUserSession } from "@/shared/lib/server"
+import { redirect } from 'next/navigation'
+
+export default async function ProfilePage() {
+  const session = await getUserSession()
+
+  if (!session) {
+    return redirect(('/not-auth'))
+  }
+
+  return <div>профиль</div>
+}

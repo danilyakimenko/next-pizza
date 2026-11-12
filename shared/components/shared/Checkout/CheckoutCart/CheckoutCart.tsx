@@ -4,7 +4,7 @@ import {
   CheckoutItemSkeleton,
 } from "@/shared/components/shared"
 import { CartStateItem, getCartItemDetails } from "@/shared/lib"
-import { PizzaSize, PizzaType } from "@/shared/constants/pizza"
+import { PizzaSize, PizzaType } from "@/shared/constants"
 
 interface Props {
   onCountButtonClick: (

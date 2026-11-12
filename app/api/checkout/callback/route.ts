@@ -3,7 +3,7 @@ import { PaymentCallbackData } from "@/@types/yookassa"
 import { prisma } from "@/prisma/prisma-client"
 import { OrderStatus } from "@prisma/client"
 import { CartItemDTO } from "@/shared/services/dto/cart.dto"
-import { sendEmail } from "@/shared/lib/sendEmail"
+import { sendEmail } from "@/shared/lib/server"
 import { OrderSuccessTemplate } from "@/shared/components/shared"
 
 export async function POST(request: NextRequest) {

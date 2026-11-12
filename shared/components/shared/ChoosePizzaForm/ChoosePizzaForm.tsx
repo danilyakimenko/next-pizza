@@ -9,7 +9,7 @@ import {
   Title,
 } from "@/shared/components/shared"
 import { Ingredient, ProductItem } from "@prisma/client"
-import { PizzaSize, PizzaType, pizzaTypes } from "@/shared/constants/pizza"
+import { PizzaSize, PizzaType, pizzaTypes } from "@/shared/constants"
 import { usePizzaOptions } from "@/shared/hooks"
 import { getPizzaDetails } from "@/shared/lib"
 

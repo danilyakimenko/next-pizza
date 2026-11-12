@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { PizzaSize, PizzaType } from "@/shared/constants/pizza"
+import { PizzaSize, PizzaType } from "@/shared/constants"
 import { useSet } from "react-use"
 import { getAvailablePizzaSizes } from "@/shared/lib"
 import { ProductItem } from "@prisma/client"
