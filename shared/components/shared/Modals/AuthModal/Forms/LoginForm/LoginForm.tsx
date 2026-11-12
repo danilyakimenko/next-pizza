@@ -54,7 +54,7 @@ export const LoginForm = ({ onClose }: Props) => {
           <div className="mr-2">
             <Title className="font-bold" text="Вход в аккаунт" size="md" />
             <p className="text-gray-400">
-              Введите свою почту, чтобы войти в аккаунт
+              Введите свои данные, чтобы войти в аккаунт
             </p>
           </div>
           <img

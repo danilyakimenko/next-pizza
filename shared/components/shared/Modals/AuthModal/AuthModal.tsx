@@ -1,5 +1,9 @@
+'use client'
+
 import { Button, Dialog, DialogContent } from "@/shared/components/ui"
 import { signIn } from "next-auth/react"
+import { useState } from "react"
+import { LoginForm } from "@/shared/components/shared"
 
 interface Props {
   open: boolean
@@ -7,6 +11,11 @@ interface Props {
 }
 
 export const AuthModal = ({ open, onClose }: Props) => {
+  const [type, setType] = useState<"login" | "register">("login")
+
+  const onTypeSwitch = () => {
+    setType(type === "login" ? "register" : "login")
+  }
   const handleClose = () => {
     onClose()
   }
@@ -14,7 +23,9 @@ export const AuthModal = ({ open, onClose }: Props) => {
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="w-[450px] bg-white p-10">
-        FORM
+        {
+          type === 'login' ? <LoginForm onClose={handleClose} /> : <h1>REGISTER</h1>
+        }
         <hr />
         <div className="flex gap-2">
           <Button
@@ -52,6 +63,14 @@ export const AuthModal = ({ open, onClose }: Props) => {
             Google
           </Button>
         </div>
+        <Button
+          className="h-12"
+          type="button"
+          variant="outline"
+          onClick={onTypeSwitch}
+        >
+          {type === "login" ? "Войти" : "Регистрация"}
+        </Button>
       </DialogContent>
     </Dialog>
   )
