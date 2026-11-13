@@ -32,6 +32,7 @@ export { ErrorText } from './ErrorText'
 export { ClearButton } from './ClearButton'
 export { AddressInput } from './AddressInput'
 export { ProfileButton } from "./ProfileButton"
+export { InfoBlock } from "./InfoBlock"
 
 export * from './FormComponents'
 export * from './Checkout'
