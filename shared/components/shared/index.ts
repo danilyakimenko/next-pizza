@@ -33,6 +33,7 @@ export { ClearButton } from './ClearButton'
 export { AddressInput } from './AddressInput'
 export { ProfileButton } from "./ProfileButton"
 export { InfoBlock } from "./InfoBlock"
+export { ProfileForm } from "./ProfileForm"
 
 export * from './FormComponents'
 export * from './Checkout'
