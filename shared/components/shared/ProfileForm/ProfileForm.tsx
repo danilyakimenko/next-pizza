@@ -53,7 +53,8 @@ export const ProfileForm = ({ data }: Props) => {
   }
 
   return (
-    <Container className="my-10">
+    <Container className="flex justify-center items-center gap-40 my-10">
+      <div>
       <Title
         text={`Личные данные | #${data.id}`}
         size="md"
@@ -100,6 +101,8 @@ export const ProfileForm = ({ data }: Props) => {
           </Button>
         </form>
       </FormProvider>
+    </div>
+      <img src="/assets/images/profile.webp" width={500} height={500} alt="" />
     </Container>
   )
 }

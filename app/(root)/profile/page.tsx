@@ -14,5 +14,9 @@ export default async function ProfilePage() {
     where: { id: Number(session?.id) },
   })
 
+  if (!user) {
+    return redirect('not/auth')
+  }
+
   return <ProfileForm data={user} />
 }
