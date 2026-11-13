@@ -11,6 +11,7 @@ import toast from "react-hot-toast"
 import { signOut } from "next-auth/react"
 import { Container, FormInput, Title } from "@/shared/components/shared"
 import { Button } from "@/shared/components/ui"
+import { updateUserInfo } from "@/app/actions"
 
 interface Props {
   data: User
@@ -53,7 +54,7 @@ export const ProfileForm = ({ data }: Props) => {
   }
 
   return (
-    <Container className="flex justify-center items-center gap-40 my-10">
+    <Container className="flex justify-centerwwww items-center gap-40 my-10">
       <div>
       <Title
         text={`Личные данные | #${data.id}`}
