@@ -17,7 +17,7 @@ interface Props {
   data: User
 }
 
-export const ProfileForm = ({ data }: Props) => {
+  export const ProfileForm = ({ data }: Props) => {
   const form = useForm({
     resolver: zodResolver(formRegisterSchema),
     defaultValues: {
