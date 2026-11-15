@@ -69,7 +69,7 @@ export const AuthModal = ({ open, onClose }: Props) => {
           variant="outline"
           onClick={onTypeSwitch}
         >
-          {type === "login" ? "Войти" : "Регистрация"}
+          {type === "login" ? "Регистрация" : "Войти в аккаунт"}
         </Button>
       </DialogContent>
     </Dialog>
