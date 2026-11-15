@@ -4,13 +4,14 @@ import {
   Container,
   SearchInput,
   ProfileButton,
-  CartButton, AuthModal,
+  CartButton,
+  AuthModal,
 } from "@/shared/components/shared"
 import Image from "next/image"
 import Link from "next/link"
 import { cn } from "cn"
 import { useEffect, useState } from "react"
-import { useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import toast from "react-hot-toast"
 
 interface Props {
@@ -24,14 +25,28 @@ export const Header = ({
   hasSearch = true,
   hasCart = true,
 }: Props) => {
+  const router = useRouter()
   const [openAuthModal, setOpenAuthModal] = useState(false)
   const searchParams = useSearchParams()
 
   useEffect(() => {
+    let toastMessage = ""
+
     if (searchParams.has("paid")) {
+      toastMessage = "Заказ успешно оплачен! Информация отправлена на почту."
+    }
+
+    if (searchParams.has("verified")) {
+      toastMessage = "Почта успешно подтверждена!"
+    }
+
+    if (toastMessage) {
       setTimeout(() => {
-        toast.success("Заказ успешно оплачен! Информация отправлена на почту.")
-      }, 300)
+        router.replace("/")
+        toast.success(toastMessage, {
+          duration: 3000,
+        })
+      }, 200)
     }
   }, [])
 
@@ -55,7 +70,10 @@ export const Header = ({
         )}
 
         <div className="flex items-center gap-3">
-          <AuthModal open={openAuthModal} onClose={() => setOpenAuthModal(false)} />
+          <AuthModal
+            open={openAuthModal}
+            onClose={() => setOpenAuthModal(false)}
+          />
 
           <ProfileButton onSignInClick={() => setOpenAuthModal(true)} />
 
