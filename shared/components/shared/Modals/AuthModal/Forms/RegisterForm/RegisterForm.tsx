@@ -41,6 +41,7 @@ export const RegisterForm = ({ onClose, onClickLogin }: Props) => {
 
       onClose?.()
     } catch (error) {
+      console.error(error)
       return toast.error("Неверный E-Mail или пароль", {
         icon: "❌",
       })
