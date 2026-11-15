@@ -34,6 +34,7 @@ export { AddressInput } from './AddressInput'
 export { ProfileButton } from "./ProfileButton"
 export { InfoBlock } from "./InfoBlock"
 export { ProfileForm } from "./ProfileForm"
+export { Stories } from "./Stories"
 
 export * from './FormComponents'
 export * from './Checkout'
