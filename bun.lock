@@ -28,6 +28,7 @@
         "react-dom": "19.3.0",
         "react-hook-form": "^7.91.0",
         "react-hot-toast": "^2.6.1",
+        "react-insta-stories": "^3.0.3",
         "react-use": "^17.6.1",
         "resend": "^6.37.0",
         "shadcn": "^4.21.4",
@@ -1271,6 +1272,8 @@
     "react-hook-form": ["react-hook-form@7.91.0", "", { "peerDependencies": { "@types/react": "*", "react": "^16.8.0 || ^17 || ^18 || ^19" }, "optionalPeers": ["@types/react"] }, "sha512-5BEBUnCBwa28AFXYTYmOaB/+CSpJ/+CWVASHEvIGUzFdHyUiPHeRhG7r5hOZ8nZi0yP7pbHdFNXO/p31EKTJFQ=="],
 
     "react-hot-toast": ["react-hot-toast@2.6.1", "", { "dependencies": { "csstype": "^3.1.3", "goober": "^2.1.16" }, "peerDependencies": { "@types/react": "*", "@types/react-dom": "*", "react": ">=16", "react-dom": ">=16" }, "optionalPeers": ["@types/react", "@types/react-dom"] }, "sha512-gjFsf05dxcku0FkyMtFH+XmYFdA2odXfBVknEr/IZ+XpUjwsgvtY2616sOpUynK+l9ykQDRNpaJ1hYfuximUiA=="],
+
+    "react-insta-stories": ["react-insta-stories@3.0.3", "", { "peerDependencies": { "react": ">=16.8.2" } }, "sha512-2OQm/sNwqcwhgqO5jSfa+s4t4LoUkbKZjACUSfRg7GJWDlcimWPf8rkAnvZIZOnfUd0RryMpSyD2xC87fiIX2A=="],
 
     "react-is": ["react-is@16.13.1", "", {}, "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="],
 
