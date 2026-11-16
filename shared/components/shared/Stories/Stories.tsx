@@ -19,7 +19,6 @@ export const Stories = ({ className }: Props) => {
   useEffect(() => {
     async function fetchStories() {
       const data = await Api.stories.getAll()
-      console.log("DATA", data)
       setStories(data)
     }
 

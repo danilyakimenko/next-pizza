@@ -190,8 +190,8 @@ export async function registerUser(body: Prisma.UserCreateInput) {
         code,
       })
     )
-  } catch (err) {
-    console.log("Error [CREATE_USER]", err)
-    throw err
+  } catch (error) {
+    console.error("Error [CREATE_USER]", error)
+    throw error
   }
 }
