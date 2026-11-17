@@ -24,7 +24,7 @@ export const ProductCard: React.FC<Props> = ({ id, name, price, imageUrl, ingred
             alt={name}
           />
         </div>
-        <Title className="mt-3 mb-1 font-bold" text={name} />
+        <Title className="mt-3 mb-1 font-bold h-[46px]" text={name} />
         <p className="text-sm text-gray-400">
           {ingredients.map((ingredient) => ingredient.name).join(", ")}
         </p>
