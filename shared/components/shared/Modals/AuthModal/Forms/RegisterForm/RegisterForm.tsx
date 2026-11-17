@@ -13,10 +13,9 @@ import { FormInput } from "@/shared/components/shared"
 
 interface Props {
   onClose?: VoidFunction
-  onClickLogin?: VoidFunction
 }
 
-export const RegisterForm = ({ onClose, onClickLogin }: Props) => {
+export const RegisterForm = ({ onClose }: Props) => {
   const form = useForm<TFormRegisterValues>({
     resolver: zodResolver(formRegisterSchema),
     defaultValues: {
